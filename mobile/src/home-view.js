@@ -7,7 +7,7 @@ import {Status} from './Status'
 import {Buttons} from './Buttons'
 import client, { Avatar, TitleBar } from '@doubledutch/rn-client'
 import FirebaseConnector from '@doubledutch/firebase-connector'
-const fbc = FirebaseConnector(client, 'safetyapps1')
+const fbc = FirebaseConnector(client, 'safety-check-app')
 fbc.initializeAppWithSimpleBackend()
 
 export default class HomeView extends Component {
@@ -39,14 +39,10 @@ export default class HomeView extends Component {
       })
 
       userRef.on('child_added', data => {
-        console.log(data.val())
-        console.log(data.key)
         this.setState({ status: data.val(), currentStatus: true})
       })
 
       userRef.on('child_changed', data => {
-        console.log(data.val())
-        console.log(data.key)
         this.setState({ status: data.val(), currentStatus: true })
       })
      

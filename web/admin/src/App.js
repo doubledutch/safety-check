@@ -4,8 +4,10 @@ import Modal  from 'react-modal'
 import client from '@doubledutch/admin-client'
 import CustomMessages from './CustomMessages'
 import List from './List'
+import CustomModal from './Modal'
 import FirebaseConnector from '@doubledutch/firebase-connector'
-const fbc = FirebaseConnector(client, 'safetyapps1')
+import {CSVLink, CSVDownload} from 'react-csv';
+const fbc = FirebaseConnector(client, 'safety-check-app')
 fbc.initializeAppWithSimpleBackend()
 
 class App extends Component {
@@ -19,7 +21,9 @@ class App extends Component {
       safeUsers: [],
       unknownUsers : [],
       ooaUsers: [],
-      allUsers: []
+      allUsers: [],
+      exportList: false,
+      openVar: false,
      }
     this.signin = fbc.signinAdmin()
       .then(user => this.user = user)
@@ -54,9 +58,11 @@ class App extends Component {
             newUser.id !== data.key
           )
           if (data.val().status === "safe"){
+            newUser[0].status = "safe"
             this.setState({ safeUsers: this.state.safeUsers.concat(newUser), unknownUsers: newList, active: true })
           }
           if (data.val().status === "OOA"){
+            newUser[0].status = "OOA"
             this.setState({ ooaUsers: this.state.safeUsers.concat(newUser), unknownUsers: newList, active: true })
           }
       })
@@ -69,9 +75,11 @@ class App extends Component {
             newUser.id !== data.key
           )
           if (data.val() === "safe"){
+            newUser[0].status = "safe"
             this.setState({ safeUsers: this.state.safeUsers.concat(newUser), unknownUsers: newList, active: true })
           }
           if (data.val() === "OOA"){
+            newUser[0].status = "OOA"
             this.setState({ ooaUsers: this.state.safeUsers.concat(newUser), unknownUsers: newList, active: true })
           } 
       })
@@ -90,9 +98,32 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+      <CustomModal
+      openVar = {this.state.openVar}
+      closeModal = {this.closeModal}
+      startCheck = {this.startCheck}
+      endCheck = {this.endCheck}
+      active = {this.state.active}
+      makeExport = {this.makeExport}
+      />
       {this.activeCheck()}
+      {this.runCSV()}
       </div>
     )
+  }
+
+  runCSV = (list) => {
+    if (this.state.exportList){
+    return(
+    <div>
+      <CSVDownload className="modalExport1" data={this.state.unknownUsers} separator={";"}>Export to CSV</CSVDownload>
+      <CSVDownload className="modalExport1" data={this.state.safeUsers} separator={";"}>Export to CSV</CSVDownload>
+      <CSVDownload className="modalExport1" data={this.state.ooaUsers} separator={";"}>Export to CSV</CSVDownload>
+      {this.setState({exportList: false})}
+    </div>
+    )
+  }
+
   }
 
 
@@ -102,7 +133,7 @@ class App extends Component {
         <span>
           <div className="topBox">
             <p className='bigBoxTitle'>{'Safety Check'}</p>
-            <button className="qaButtonOff" onClick={this.endCheck}>Deactivate Safety Check</button>
+            <button className="qaButtonOff" onClick={this.openModal}>Deactivate Safety Check</button>
           </div>
           <CustomMessages
           active = {this.state.showButtons}
@@ -128,14 +159,17 @@ class App extends Component {
       return (
         <div className="topBox">
           <p className='bigBoxTitle'>{'Safety Check'}</p>
-          <button className="qaButton" onClick={this.startCheck}>Activate Safety Check</button>
+          <button className="qaButton" onClick={this.openModal}>Activate Safety Check</button>
+          <button className="qaButtonOff" style={{marginLeft: 10}}onClick={this.makeExport}>Export CSV</button>
         </div>
       )
     }
   }
 
+ 
+
   startCheck = () => {
-    this.setState({active: true, check: [], ooaUsers: [], safeUsers: [], unknownUsers: this.state.allUsers })
+    this.setState({active: true, check: [], ooaUsers: [], safeUsers: [], unknownUsers: this.state.allUsers, openVar: false})
     fbc.database.private.adminableUsersRef().remove()
     .catch (x => console.error(x))
     fbc.database.public.adminRef('checks').push(true)
@@ -146,7 +180,27 @@ class App extends Component {
     var mod = this.state.check
     fbc.database.public.adminRef('checks').child(mod.key).remove()
     .catch (x => console.error(x))
+    this.closeModal()
   }
+
+  makeExport = () => {
+    console.log("here")
+    this.setState({openVar: false, exportList: true});
+    this.endCheck()
+
+  }
+
+
+  openModal = () => {
+    this.setState({openVar: true})
+  }
+
+  closeModal = () => {
+    this.setState({openVar: false});
+  }
+
+  
+
 
   markComplete(task) {
     fbc.database.public.allRef('tasks').child(task.key).remove()

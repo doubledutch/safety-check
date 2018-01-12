@@ -157,3 +157,98 @@
   /* float: right;
   display: flex; */
 }
+
+.closeButton{
+  flex: 1;
+  display: flex;
+  float: right;
+  margin-Top: 5px;
+  border: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Fira Sans', 'Open Sans', 'Helvetica Neue', sans-serif;
+  margin-Left: 5px;
+  font-weight: 600;
+  font-size: 12px;
+
+}
+
+.Modal {
+  position: absolute;
+  width: 600px;
+  border: 1px solid #CDCDCD;
+  background-color: #FFFFFF;
+}
+
+.Overlay {
+  position: fixed;
+  left: 29%;
+  top: 120px; 
+}
+
+.modalTextBox {
+  padding-top: 15px;
+  padding-right: 30px;
+  padding-left: 30px;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.modalButtonBox {
+  height: 71px;
+  background-color: #484D4F;
+}
+
+.modalHeadline{
+  font-family: -apple-system, BlinkMacSystemFont, 'Fira Sans', 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #4A4A4A;
+}
+
+
+.modalText{
+  font-family: -apple-system, BlinkMacSystemFont, 'Fira Sans', 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  color: #4A4A4A;
+}
+
+.modalDone{
+  background-color: #009DCD;
+  border: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Fira Sans', 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: white;
+  font-size: 18px;
+  height: 41px;
+  width: 81px;
+  margin-top: 15px;
+  border-radius: 0;
+}
+
+.modalExport{
+  text-decoration: none;
+  background-color: #009DCD;
+  border: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Fira Sans', 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: white;
+  font-size: 13px;
+  margin-top: 15px;
+  border-radius: 0;
+  margin-left: 30px;
+  margin-right: 20px;
+  padding: 9px;
+  border-radius: 4px;
+}
+
+.modalExport1{
+  background-color: #009DCD;
+  border: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Fira Sans', 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: white;
+  font-size: 18px;
+  height: 41px;
+  width: 165px;
+  margin-top: 15px;
+  border-radius: 0;
+  margin-left: 30px;
+  margin-right: 20px;
+}
