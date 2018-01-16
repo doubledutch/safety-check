@@ -32,8 +32,6 @@ class App extends Component {
 
   componentDidMount() {
 
-    // this.setState({ allUsers: client.getUsers()})
-
     this.signin.then(() => {
       client.getUsers().then(users => {
       this.setState({allUsers: users, unknownUsers: users})
@@ -41,14 +39,8 @@ class App extends Component {
       const adminableRef = fbc.database.private.adminableUsersRef()
     
       sharedRef.on('child_added', data => {
-        // this.setState({ check: [...this.state.check, {...data.val(), key: data.key }], active: true })
-        this.setState({ check: {...data.val(), key: data.key}, active: true })
+        this.setState({ check: {...data.val(), key: data.key}, active: true, showButtons: true })
       })
-
-      // sharedRef.on('child_changed', data => {
-      //   console.log
-      //   this.setState({ check: data.val(), active: true })
-      // })
 
       adminableRef.on('child_added', data => {
           var newUser = this.state.unknownUsers.filter(newUser => 
@@ -59,11 +51,11 @@ class App extends Component {
           )
           if (data.val().status === "safe"){
             newUser[0].status = "safe"
-            this.setState({ safeUsers: this.state.safeUsers.concat(newUser), unknownUsers: newList, active: true })
+            this.setState({ safeUsers: this.state.safeUsers.concat(newUser), unknownUsers: newList, active: true})
           }
           if (data.val().status === "OOA"){
             newUser[0].status = "OOA"
-            this.setState({ ooaUsers: this.state.safeUsers.concat(newUser), unknownUsers: newList, active: true })
+            this.setState({ ooaUsers: this.state.safeUsers.concat(newUser), unknownUsers: newList, active: true})
           }
       })
 
@@ -76,73 +68,68 @@ class App extends Component {
           )
           if (data.val() === "safe"){
             newUser[0].status = "safe"
-            this.setState({ safeUsers: this.state.safeUsers.concat(newUser), unknownUsers: newList, active: true })
+            this.setState({ safeUsers: this.state.safeUsers.concat(newUser), unknownUsers: newList, active: true})
           }
           if (data.val() === "OOA"){
             newUser[0].status = "OOA"
-            this.setState({ ooaUsers: this.state.safeUsers.concat(newUser), unknownUsers: newList, active: true })
+            this.setState({ ooaUsers: this.state.safeUsers.concat(newUser), unknownUsers: newList, active: true})
           } 
       })
 
-    
       sharedRef.on('child_removed', data => {
-        this.setState({ check: "", active: false, currentStatus: false})
+        this.setState({ check: "", currentStatus: false, showButtons: false})
       }) 
     })
   })
-    .catch(err => console.error(err))
-
-    
+    .catch(err => console.error(err)) 
   }
 
   render() {
     return (
       <div className="App">
-      <CustomModal
-      openVar = {this.state.openVar}
-      closeModal = {this.closeModal}
-      startCheck = {this.startCheck}
-      endCheck = {this.endCheck}
-      active = {this.state.active}
-      makeExport = {this.makeExport}
-      />
-      {this.activeCheck()}
-      {this.runCSV()}
+        <CustomModal
+        openVar = {this.state.openVar}
+        closeModal = {this.closeModal}
+        startCheck = {this.startCheck}
+        endCheck = {this.endCheck}
+        active = {this.state.showButtons}
+        makeExport = {this.makeExport}
+        />
+        <div className="topBox">
+          <p className='bigBoxTitle'>{'Safety Check'}</p>
+          {this.showActivate()}
+          {this.showCSV()}
+        </div>
+        <CustomMessages
+        active = {this.state.showButtons}
+        />
+        {this.showActiveCheck()}
+        {this.runCSV()}
       </div>
     )
   }
 
   runCSV = (list) => {
     if (this.state.exportList){
-    return(
-    <div>
-      <CSVDownload className="modalExport1" data={this.state.unknownUsers} separator={";"}>Export to CSV</CSVDownload>
-      <CSVDownload className="modalExport1" data={this.state.safeUsers} separator={";"}>Export to CSV</CSVDownload>
-      <CSVDownload className="modalExport1" data={this.state.ooaUsers} separator={";"}>Export to CSV</CSVDownload>
-      {this.setState({exportList: false})}
-    </div>
-    )
+      return(
+      <div>
+        <CSVDownload className="modalExport1" data={this.state.unknownUsers} separator={";"}>Export to CSV</CSVDownload>
+        <CSVDownload className="modalExport1" data={this.state.safeUsers} separator={";"}>Export to CSV</CSVDownload>
+        <CSVDownload className="modalExport1" data={this.state.ooaUsers} separator={";"}>Export to CSV</CSVDownload>
+        {this.setState({exportList: false})}
+      </div>
+      )
+    }
   }
 
-  }
-
-
-  activeCheck = () => {
+  showActiveCheck = () => {
     if (this.state.active) {
-      return (
-        <span>
-          <div className="topBox">
-            <p className='bigBoxTitle'>{'Safety Check'}</p>
-            <button className="qaButtonOff" onClick={this.openModal}>Deactivate Safety Check</button>
-          </div>
-          <CustomMessages
-          active = {this.state.showButtons}
-          />
-          <div className="statusesBox">
+      return (    
+        <div className="statusesBox">
           <List
           listData = {this.state.unknownUsers}
           listName = {"Not Checked In"}
-          />
+          /> 
           <List
           listData = {this.state.safeUsers}
           listName = {"Marked As Safe"}
@@ -151,25 +138,34 @@ class App extends Component {
           listData = {this.state.ooaUsers}
           listName = {"Not in Area"}
           />
-          </div>
-        </span>
-      )
-    }
-    else {
-      return (
-        <div className="topBox">
-          <p className='bigBoxTitle'>{'Safety Check'}</p>
-          <button className="qaButton" onClick={this.openModal}>Activate Safety Check</button>
-          <button className="qaButtonOff" style={{marginLeft: 10}}onClick={this.makeExport}>Export CSV</button>
         </div>
       )
     }
   }
 
- 
+  showActivate = () => {
+    if (this.state.showButtons) {
+      return (
+        <button className="qaButtonOff" onClick={this.openModal}>Deactivate Safety Check</button>
+      )
+    }
+    else {
+      return(
+        <button className="qaButton" onClick={this.openModal}>Activate Safety Check</button>
+      )
+    }
+  }
+
+  showCSV = () => {
+    if (this.state.active){
+      return (
+        <button className="csvButton" style={{marginLeft: 10}}onClick={this.makeExport}>Export Lists to CSV</button>
+      )
+    }
+  }
 
   startCheck = () => {
-    this.setState({active: true, check: [], ooaUsers: [], safeUsers: [], unknownUsers: this.state.allUsers, openVar: false})
+    this.setState({active: true, check: [], ooaUsers: [], safeUsers: [], unknownUsers: this.state.allUsers, openVar: false, showButtons: true})
     fbc.database.private.adminableUsersRef().remove()
     .catch (x => console.error(x))
     fbc.database.public.adminRef('checks').push(true)
@@ -184,10 +180,8 @@ class App extends Component {
   }
 
   makeExport = () => {
-    console.log("here")
     this.setState({openVar: false, exportList: true});
     this.endCheck()
-
   }
 
 

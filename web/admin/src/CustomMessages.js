@@ -18,19 +18,6 @@ class CustomMessages extends Component {
         this.setState({value: event.target.value});
     }
 
-
-    // handleChange = (event) => {
-    //     console.log(event.target.type)
-    //     if (event.target.type === "message"){
-    //         console.log("here")
-    //     this.setState({value: event.target.value});
-    //   }
-
-    //   if (event.target.type === "post"){
-    //     this.setState({secondValue: event.target.value});
-    //   }
-    // }
-
     handleChange2 = (event) => {
         this.setState({secondValue: event.target.value});
     }
@@ -40,40 +27,45 @@ class CustomMessages extends Component {
         event.preventDefault();
       }
 
+      showButtons = () => {
+          if (this.props.active) {
+              return (
+                <div className="messages">
+                    <span className="questionBox">
+                        <p className="boxTitle">
+                        Push Message
+                        </p>
+                        <form>
+                            <textarea className="questionInput" type="message" value={this.state.value} onChange={this.handleChange} />
+                            <div className="buttonBox">
+                                <p className="buttonText">(Linked to Safety Check)</p>
+                                <input className="publishButton" type="submit" value="Submit" />
+                            </div>
+                        </form>
+                    </span>
+                    <span className="questionBox">
+                        <p className="boxTitle">
+                        Promoted Post
+                        </p>
+                        <form>
+                            <textarea className="questionInput" type="post" value={this.state.secondValue} onChange={this.handleChange2} />
+                            <div className="buttonBox">
+                                <p className="buttonText">(Linked to Safety Check)</p>
+                                <p className="buttonText">Pinned for 3 hours</p>
+                                <input className="publishButton" type="submit" value="Submit" />
+                            </div>
+                        </form>
+                    </span>  
+                </div>
+                )
+          }
+      }
+
 
     render(){
-
-        
-
         return (
-            <div className="messages">
-                <span className="questionBox">
-                    <p className="boxTitle">
-                    Push Message
-                    </p>
-                    <form>
-                        {/* <input className ="questionInput" type="text" name="name" /> */}
-                        <textarea className="questionInput" type="message" value={this.state.value} onChange={this.handleChange} />
-                        <div className="buttonBox">
-                            <p className="buttonText">(Linked to Safety Check)</p>
-                            <input className="publishButton" type="submit" value="Submit" />
-                        </div>
-                    </form>
-                </span>
-                <span className="questionBox">
-                    <p className="boxTitle">
-                    Promoted Post
-                    </p>
-                    <form>
-                        {/* <input className ="questionInput" type="text" name="name" /> */}
-                        <textarea className="questionInput" type="post" value={this.state.secondValue} onChange={this.handleChange2} />
-                        <div className="buttonBox">
-                            <p className="buttonText">(Linked to Safety Check)</p>
-                            <p className="buttonText">Pinned for 3 hours</p>
-                            <input className="publishButton" type="submit" value="Submit" />
-                        </div>
-                    </form>
-                </span>      
+            <div>
+            {this.showButtons()}
             </div>
         )
 

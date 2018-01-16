@@ -24,15 +24,15 @@ export class CustomModal extends Component {
         className="Modal"
         overlayClassName="Overlay"
         >
-        <div>
-          {this.modalX()}
-          <div className="modalTextBox">
-            {this.modalMessage()}
-          </div>
-          <div className="modalButtonBox">
-            {this.modalButtons()}
-          </div >    
-        </div>
+            <div>
+                {this.modalX()}
+                <div className="modalTextBox">
+                    {this.modalMessage()}
+                </div>
+                <div className="modalButtonBox">
+                    {this.modalButtons()}
+                </div >    
+            </div>
         </Modal>
         )
     }
@@ -63,9 +63,7 @@ export class CustomModal extends Component {
                 <p className="modalText">Would you like to export the attendee check-in lists?</p>
                 </div>
             )
-
         }
-
         else {
               return (
                 <div>
@@ -74,7 +72,6 @@ export class CustomModal extends Component {
                 <p className="modalText">Are you sure you want to active a Safety Check?</p>
                 </div>
             )
-
         }
     }
 
@@ -82,22 +79,19 @@ export class CustomModal extends Component {
         if (this.props.active) {
             return (
                 <div>
-                    <button className="modalExport1" onClick={this.props.makeExport}>Export CSV</button>
+                    <button className="modalExport1" onClick={this.props.makeExport}>Export to CSV</button>
                     <button className="modalDone" onClick={this.props.endCheck}>Done</button>
                 </div>
             )
         }
-            else {
-                return (
-                    <div>
-                        <button className="modalExport1" onClick={this.props.startCheck}>Activate</button>
-                        <button className="modalDone" onClick={this.props.closeModal}>Cancel</button>
-                        
+        else {
+            return (
+                <div>
+                    <button className="modalExport1" onClick={this.props.startCheck}>Activate</button>
+                    <button className="modalDone" onClick={this.props.closeModal}>Cancel</button>
                 </div>
-                )
-            }
-
-
+            )
+        }
     }
 
 

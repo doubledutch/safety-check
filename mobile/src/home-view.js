@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import ReactNative, {
-  KeyboardAvoidingView, Platform, TouchableOpacity, Text, TextInput, View, ScrollView
+  KeyboardAvoidingView, Platform, TouchableOpacity, Text, TextInput, View, ScrollView, Image
 } from 'react-native'
-// import { fromConfigArray } from '@doubledutch/rn-components/'
 import {Status} from './Status'
 import {Buttons} from './Buttons'
 import client, { Avatar, TitleBar } from '@doubledutch/rn-client'
@@ -13,7 +12,6 @@ fbc.initializeAppWithSimpleBackend()
 export default class HomeView extends Component {
   constructor() {
     super()
-
     this.state = { 
       status: "", 
       check: [], 
@@ -34,12 +32,13 @@ export default class HomeView extends Component {
       sharedRef.on('child_added', data => {
         this.setState({ check: data.val(), checkStatus: true })
       })
+
       sharedRef.on('child_removed', data => {
         this.setState({check: "", status: "", checkStatus: false, currentStatus: false })
       })
 
       userRef.on('child_added', data => {
-        this.setState({ status: data.val(), currentStatus: true})
+        this.setState({ status: data.val(), currentStatus: true })
       })
 
       userRef.on('child_changed', data => {
@@ -65,8 +64,8 @@ export default class HomeView extends Component {
 
   render() {
     return (
-    <View title="" style={{ flex: 1,backgroundColor:'#E8E8E8' }}>
-        <TitleBar title="Welcome" client={client} signin={this.signin} />
+      <View title="" style={{ flex: 1,backgroundColor:'#E8E8E8' }}>
+        <TitleBar title="Safety Check" client={client} signin={this.signin} />
         <ScrollView style={s.container}>
           <Status
           checkStatus = {this.state.checkStatus}
@@ -76,12 +75,9 @@ export default class HomeView extends Component {
           />
           {this.showButtons()}
         </ScrollView>
-    </View>
+      </View>
     )
   }
-
-
- 
 
   markSafe = () => {
     fbc.database.private.adminableUserRef("status").set("safe")
@@ -114,7 +110,6 @@ const s = ReactNative.StyleSheet.create({
   },
   checkmark: {
     textAlign: 'center',
-    fontSize
   },
   creatorAvatar: {
     marginRight: 4

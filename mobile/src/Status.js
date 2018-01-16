@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactNative, {
-  KeyboardAvoidingView, Platform, TouchableOpacity, Text, TextInput, View, ScrollView
+  KeyboardAvoidingView, Platform, TouchableOpacity, Text, TextInput, View, ScrollView, Image
 } from 'react-native'
 
 
@@ -13,7 +13,7 @@ export class Status extends Component {
 
   renderMessage = () => {
       const userID = this.props.userID
-
+      
       if (this.props.currentStatus) {
         if (this.props.status === "safe") {
             return (
@@ -34,7 +34,6 @@ export class Status extends Component {
                 )
             }
       }
-
       else {
         if (this.props.checkStatus){
             return (
@@ -62,12 +61,22 @@ export class Status extends Component {
     }
   }
 
+  renderIcon = () => {
+    if (this.props.currentStatus) {
+        return <Image style={{width: 50, height: 50, margin: 1, flex: 1, alignSelf: "center"}} source={{uri: "https://dml2n2dpleynv.cloudfront.net/extensions/safety-check/checkocircle@2x.png"}}/>
+    }
+    else {
+        return <Image style={{width: 50, height: 50, margin: 1, flex: 1, alignSelf: "center"}} source={{uri: "https://dml2n2dpleynv.cloudfront.net/extensions/safety-check/checkocircle_grey@2x.png"}}/>
+    }
+}
+
 
   render(){
     return (
         <View style={s.container}>
             <View style={s.iconBox}>
-                <Text style={{flex: 1, textAlign: "center", fontSize: 24, fontWeight: "500", color: "#a9a9a9", margin: 10}}>
+                {this.renderIcon()}
+                <Text style={{flex: 1, textAlign: "center", fontSize: 24, fontWeight: "500", color: "#4A4A4A", margin: 10}}>
                     Safety Check
                 </Text>
             </View>
@@ -107,6 +116,7 @@ const s = ReactNative.StyleSheet.create({
         flex: 1,
         textAlign: "center",
         fontSize: 18,
+        color: "#4a4a4a"
     },
 
     secondMessage: {
