@@ -15,7 +15,7 @@ This project provides a safety check-in functionality for event organizers to in
 * For the attendee check-in we use private/adminable/users as only the specific user and admin should have access to viewing/updating this data point. Since this is the only data point being tracked for this app we can create it via:
         fbc.database.private.adminableUserRef("status").set("safe")
 
-In our database it would be stored as:
+  * In our database it would be stored as:
     {"24601":
         {"status":"OOA"}
     }
