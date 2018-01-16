@@ -10,7 +10,7 @@ class CustomMessages extends Component {
         super(props)
         this.state = {
             value: "Please enter a test notification",
-            secondValue: "Second test"
+            secondValue: "Please enter a test post"
         }
     }
 
@@ -36,7 +36,7 @@ class CustomMessages extends Component {
                         Push Message
                         </p>
                         <form>
-                            <textarea className="questionInput" type="message" value={this.state.value} onChange={this.handleChange} />
+                            <textarea className="questionInput" type="message" maxlength="140" value={this.state.value} onChange={this.handleChange} />
                             <div className="buttonBox">
                                 <p className="buttonText">(Linked to Safety Check)</p>
                                 <input className="publishButton" type="submit" value="Submit" />
@@ -48,7 +48,7 @@ class CustomMessages extends Component {
                         Promoted Post
                         </p>
                         <form>
-                            <textarea className="questionInput" type="post" value={this.state.secondValue} onChange={this.handleChange2} />
+                            <textarea className="questionInput" type="post" maxlength="140" value={this.state.secondValue} onChange={this.handleChange2} />
                             <div className="buttonBox">
                                 <p className="buttonText">(Linked to Safety Check)</p>
                                 <p className="buttonText">Pinned for 3 hours</p>

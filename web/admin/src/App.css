@@ -106,7 +106,7 @@
 .buttonBox{
   float: right;
   display: flex;
-  margin-right: -10px;
+  margin-right: -5px;
 }
 
 .statusesBox{

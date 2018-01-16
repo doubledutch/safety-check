@@ -146,7 +146,7 @@ class App extends Component {
   showActivate = () => {
     if (this.state.showButtons) {
       return (
-        <button className="qaButtonOff" onClick={this.openModal}>Deactivate Safety Check</button>
+        <button className="qaButtonOff" onClick={this.endCheck}>Deactivate Safety Check</button>
       )
     }
     else {
@@ -176,12 +176,12 @@ class App extends Component {
     var mod = this.state.check
     fbc.database.public.adminRef('checks').child(mod.key).remove()
     .catch (x => console.error(x))
-    this.closeModal()
+    this.openModal()
   }
 
   makeExport = () => {
     this.setState({openVar: false, exportList: true});
-    this.endCheck()
+    this.closeModal()
   }
 
 
@@ -192,9 +192,6 @@ class App extends Component {
   closeModal = () => {
     this.setState({openVar: false});
   }
-
-  
-
 
   markComplete(task) {
     fbc.database.public.allRef('tasks').child(task.key).remove()

@@ -44,7 +44,7 @@ export class CustomModal extends Component {
     modalX = () => {
         if (this.props.active) {
             return (
-                <button className="closeButton" onClick={this.props.endCheck}>X</button>
+                <button className="closeButton" onClick={this.props.closeModal}>X</button>
             )
         }
         else {
@@ -80,7 +80,7 @@ export class CustomModal extends Component {
             return (
                 <div>
                     <button className="modalExport1" onClick={this.props.makeExport}>Export to CSV</button>
-                    <button className="modalDone" onClick={this.props.endCheck}>Done</button>
+                    <button className="modalDone" onClick={this.props.closeModal}>Done</button>
                 </div>
             )
         }
