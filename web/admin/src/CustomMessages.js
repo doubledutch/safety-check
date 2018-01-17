@@ -4,63 +4,92 @@ import Modal  from 'react-modal'
 import ReactDOM from 'react-dom'
 import client, {Color} from '@doubledutch/admin-client'
 
-
-class CustomMessages extends Component {
+export default class CustomMessages extends Component {
     constructor(props){
         super(props)
         this.state = {
-            value: "Please enter a test notification",
-            secondValue: "Please enter a test post"
+            pushMessage: "A security incident has occurred. Mark yourself 'safe' if you are okay.",
+            promotedMessage: "A security incident has occurred. Mark yourself 'safe' if you are okay."
         }
     }
 
-    handleChange = (event) => {
-        this.setState({value: event.target.value});
+    pushMessageChanged = (event) => {
+        this.setState({pushMessage: event.target.value});
     }
 
-    handleChange2 = (event) => {
-        this.setState({secondValue: event.target.value});
+    promotedMessageChanged = (event) => {
+        this.setState({promotedMessage: event.target.value});
     }
 
-      handleSubmit = (event) => {
-        alert('A name was submitted: ' + this.state.value);
+    handleSubmit = (event) => {
+        alert('A name was submitted: ' + this.state.pushMessage);
         event.preventDefault();
-      }
+    }
 
-      showButtons = () => {
-          if (this.props.active) {
-              return (
-                <div className="messages">
-                    <span className="questionBox">
-                        <p className="boxTitle">
-                        Push Message
-                        </p>
-                        <form>
-                            <textarea className="questionInput" type="message" maxlength="140" value={this.state.value} onChange={this.handleChange} />
-                            <div className="buttonBox">
-                                <p className="buttonText">(Linked to Safety Check)</p>
-                                <input className="publishButton" type="submit" value="Submit" />
-                            </div>
-                        </form>
-                    </span>
-                    <span className="questionBox">
-                        <p className="boxTitle">
-                        Promoted Post
-                        </p>
-                        <form>
-                            <textarea className="questionInput" type="post" maxlength="140" value={this.state.secondValue} onChange={this.handleChange2} />
-                            <div className="buttonBox">
-                                <p className="buttonText">(Linked to Safety Check)</p>
-                                <p className="buttonText">Pinned for 3 hours</p>
-                                <input className="publishButton" type="submit" value="Submit" />
-                            </div>
-                        </form>
-                    </span>  
-                </div>
-                )
-          }
-      }
+    sendPromotedMessage = () => {
+        client.cmsRequest('POST', '/api/messages', {
+            Type: 'Promoted',
+            Text: this.state.promotedMessage,
+            Schedule: {
+                Now: true,
+                DurationInMinutes: 20
+            },
+            LinkTypeId: 3,
+            LinkText: 'Check in',
+            LinkValue: 'https://firebasestorage.googleapis.com/v0/b/bazaar-179323.appspot.com/o/extensions%2Fsafeapp%2F0.1.0%2Fmobile%2Findex.__platform__.0.46.4.manifest.bundle?module=safeapp&alt=media#plugin'
+        }).then(() => {
+            alert('Promoted message posted')
+        })
+    }
 
+    sendPushMessage = () => {
+        client.cmsRequest('POST', '/api/messages', {
+            Type: 'Push',
+            Text: this.state.pushMessage,
+            Schedule: {
+                Now: true
+            },
+            LinkTypeId: 3,
+            LinkText: 'Check in',
+            LinkValue: 'https://firebasestorage.googleapis.com/v0/b/bazaar-179323.appspot.com/o/extensions%2Fsafeapp%2F0.1.0%2Fmobile%2Findex.__platform__.0.46.4.manifest.bundle?module=safeapp&alt=media#plugin'
+        }).then(() => {
+            alert('Push message sent')
+        })
+    }
+
+    showButtons = () => {
+        if (this.props.active) {
+            return (
+            <div className="messages">
+                <span className="questionBox">
+                    <p className="boxTitle">
+                    Push Message
+                    </p>
+                    <form>
+                        <textarea className="questionInput" type="message" maxlength="140" value={this.state.pushMessage} onChange={this.pushMessageChanged} />
+                        <div className="buttonBox">
+                            <p className="buttonText">(Linked to Safety Check)</p>
+                            <input className="publishButton" type="submit" value="Submit" />
+                        </div>
+                    </form>
+                </span>
+                <span className="questionBox">
+                    <p className="boxTitle">
+                    Promoted Post
+                    </p>
+                    <form>
+                        <textarea className="questionInput" type="post" maxlength="140" value={this.state.promotedMessage} onChange={this.promotedMessageChanged} />
+                        <div className="buttonBox">
+                            <p className="buttonText">(Linked to Safety Check)</p>
+                            <p className="buttonText">Pinned for 3 hours</p>
+                            <input className="publishButton" type="submit" value="Submit" />
+                        </div>
+                    </form>
+                </span>  
+            </div>
+            )
+        }
+    }
 
     render(){
         return (
@@ -68,10 +97,5 @@ class CustomMessages extends Component {
             {this.showButtons()}
             </div>
         )
-
     }
-
-
 }
-
-export default CustomMessages
