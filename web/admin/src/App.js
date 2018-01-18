@@ -24,6 +24,9 @@ class App extends Component {
       allUsers: [],
       exportList: false,
       openVar: false,
+      modalAlert: false,
+      endCheck: false,
+      modalMessage: ""
      }
     this.signin = fbc.signinAdmin()
       .then(user => this.user = user)
@@ -39,7 +42,7 @@ class App extends Component {
       const adminableRef = fbc.database.private.adminableUsersRef()
     
       sharedRef.on('child_added', data => {
-        this.setState({ check: {...data.val(), key: data.key}, active: true, showButtons: true })
+        this.setState({ check: {...data.val(), key: data.key}, active: true, showButtons: true, endCheck: false})
       })
 
       adminableRef.on('child_added', data => {
@@ -77,7 +80,7 @@ class App extends Component {
       })
 
       sharedRef.on('child_removed', data => {
-        this.setState({ check: "", currentStatus: false, showButtons: false})
+        this.setState({check: "", currentStatus: false, showButtons: false})
       }) 
     })
   })
@@ -91,9 +94,11 @@ class App extends Component {
         openVar = {this.state.openVar}
         closeModal = {this.closeModal}
         startCheck = {this.startCheck}
-        endCheck = {this.endCheck}
+        endCheck = {this.state.endCheck}
         active = {this.state.showButtons}
         makeExport = {this.makeExport}
+        modalMessage = {this.state.modalMessage}
+        modalAlert = {this.state.modalAlert}
         />
         <div className="topBox">
           <p className='bigBoxTitle'>{'Safety Check'}</p>
@@ -102,12 +107,48 @@ class App extends Component {
         </div>
         <CustomMessages
         active = {this.state.showButtons}
+        sendPush = {this.sendPushMessage}
+        sendPost = {this.sendPromotedMessage}
+        testMessage = "A security incident has occurred. Mark yourself 'safe' if you are okay."
         />
         {this.showActiveCheck()}
         {this.runCSV()}
       </div>
     )
   }
+
+  sendPushMessage = (pushMessage) => {
+    alert('Push message sent')
+    client.cmsRequest('POST', '/api/messages', {
+        Type: 'Push',
+        Text: pushMessage,
+        Schedule: {
+            Now: true
+        },
+        LinkTypeId: 3,
+        LinkText: 'Check in',
+        LinkValue: 'https://firebasestorage.googleapis.com/v0/b/bazaar-179323.appspot.com/o/extensions%2Fsafeapp%2F0.1.0%2Fmobile%2Findex.__platform__.0.46.4.manifest.bundle?module=safeapp&alt=media#plugin'
+    }).then(() => {
+        alert('Push message sent')
+        this.setState({openVar: true, modalAlert: true, modalMessage: "Push Notification sent.", endCheck: false})
+    })
+}
+
+sendPromotedMessage = () => {
+  client.cmsRequest('POST', '/api/messages', {
+      Type: 'Promoted',
+      Text: this.state.promotedMessage,
+      Schedule: {
+          Now: true,
+          DurationInMinutes: 20
+      },
+      LinkTypeId: 3,
+      LinkText: 'Check in',
+      LinkValue: 'https://firebasestorage.googleapis.com/v0/b/bazaar-179323.appspot.com/o/extensions%2Fsafeapp%2F0.1.0%2Fmobile%2Findex.__platform__.0.46.4.manifest.bundle?module=safeapp&alt=media#plugin'
+  }).then(() => {
+    this.setState({openVar: true, modalAlert: true, modalMessage: "Promoted Post created.", endCheck: false})
+  })
+}
 
   runCSV = (list) => {
     if (this.state.exportList){
@@ -159,7 +200,7 @@ class App extends Component {
   showCSV = () => {
     if (this.state.active){
       return (
-        <button className="csvButton" style={{marginLeft: 10}}onClick={this.makeExport}>Export Lists to CSV</button>
+        <button className="csvButton" style={{marginLeft: 10}} onClick={this.makeExport}>Export Lists to CSV</button>
       )
     }
   }
@@ -176,7 +217,7 @@ class App extends Component {
     var mod = this.state.check
     fbc.database.public.adminRef('checks').child(mod.key).remove()
     .catch (x => console.error(x))
-    this.openModal()
+    .then(() => this.setState({endCheck: true, openVar: true, modalAlert: false}))
   }
 
   makeExport = () => {
@@ -184,9 +225,8 @@ class App extends Component {
     this.closeModal()
   }
 
-
   openModal = () => {
-    this.setState({openVar: true})
+    this.setState({openVar: true, endCheck: false})
   }
 
   closeModal = () => {

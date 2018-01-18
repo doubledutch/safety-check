@@ -55,28 +55,38 @@ export class CustomModal extends Component {
     }
 
     modalMessage = () => {
-        if (this.props.active) {
+        if (this.props.endCheck) {
             return (
                 <div>
-                <p className="modalHeadline">Safety Check has been deactivated</p>
-                <p className="modalText">We suggest sending a push message alerting your attendees the event area is safe.</p>
-                <p className="modalText">Would you like to export the attendee check-in lists?</p>
+                    <p className="modalHeadline">Safety Check has been deactivated</p>
+                    <p className="modalText">We suggest sending a push message alerting your attendees the event area is safe.</p>
+                    <p className="modalText">Would you like to export the attendee check-in lists?</p>
                 </div>
-            )
+            )    
         }
         else {
+            if (this.props.modalAlert){
+                return (
+                    <div>
+                        <p className="modalHeadline">Success</p>
+                        <p className="modalText" style={{marginBottom: 75}}>{this.props.modalMessage}</p>
+                    </div>
+                )
+            }
+            else {
               return (
                 <div>
-                <p className="modalHeadline">Confirm to activate Safety Check</p>
-                <p className="modalText">We suggest sending a push message & creating a promoted post alerting your attendees about the incident and to check-in.</p>
-                <p className="modalText">Are you sure you want to active a Safety Check?</p>
+                    <p className="modalHeadline">Confirm to activate Safety Check</p>
+                    <p className="modalText">We suggest sending a push message & creating a promoted post alerting your attendees about the incident and to check-in.</p>
+                    <p className="modalText">Are you sure you want to active a Safety Check?</p>
                 </div>
-            )
+                )
+            }
         }
     }
 
     modalButtons = () => {
-        if (this.props.active) {
+        if (this.props.endCheck) {
             return (
                 <div>
                     <button className="modalExport1" onClick={this.props.makeExport}>Export to CSV</button>
@@ -85,12 +95,21 @@ export class CustomModal extends Component {
             )
         }
         else {
-            return (
-                <div>
-                    <button className="modalExport1" onClick={this.props.startCheck}>Activate</button>
-                    <button className="modalDone" onClick={this.props.closeModal}>Cancel</button>
-                </div>
-            )
+            if (this.props.modalAlert){
+                return (
+                    <div>
+                        <button className="modalDone" style={{marginLeft: 30}} onClick={this.props.closeModal}>Done</button>
+                    </div>
+                )
+            }
+            else {
+                return (
+                    <div>
+                        <button className="modalExport1" onClick={this.props.startCheck}>Activate</button>
+                        <button className="modalDone" onClick={this.props.closeModal}>Cancel</button>
+                    </div>
+                )
+            }
         }
     }
 

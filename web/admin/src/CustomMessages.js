@@ -8,8 +8,8 @@ export default class CustomMessages extends Component {
     constructor(props){
         super(props)
         this.state = {
-            pushMessage: "A security incident has occurred. Mark yourself 'safe' if you are okay.",
-            promotedMessage: "A security incident has occurred. Mark yourself 'safe' if you are okay."
+            pushMessage: this.props.testMessage,
+            promotedMessage: this.props.testMessage
         }
     }
 
@@ -21,40 +21,12 @@ export default class CustomMessages extends Component {
         this.setState({promotedMessage: event.target.value});
     }
 
-    handleSubmit = (event) => {
-        alert('A name was submitted: ' + this.state.pushMessage);
-        event.preventDefault();
+    sendPush = () => {
+        this.props.sendPush(this.state.pushMessage)
     }
 
-    sendPromotedMessage = () => {
-        client.cmsRequest('POST', '/api/messages', {
-            Type: 'Promoted',
-            Text: this.state.promotedMessage,
-            Schedule: {
-                Now: true,
-                DurationInMinutes: 20
-            },
-            LinkTypeId: 3,
-            LinkText: 'Check in',
-            LinkValue: 'https://firebasestorage.googleapis.com/v0/b/bazaar-179323.appspot.com/o/extensions%2Fsafeapp%2F0.1.0%2Fmobile%2Findex.__platform__.0.46.4.manifest.bundle?module=safeapp&alt=media#plugin'
-        }).then(() => {
-            alert('Promoted message posted')
-        })
-    }
-
-    sendPushMessage = () => {
-        client.cmsRequest('POST', '/api/messages', {
-            Type: 'Push',
-            Text: this.state.pushMessage,
-            Schedule: {
-                Now: true
-            },
-            LinkTypeId: 3,
-            LinkText: 'Check in',
-            LinkValue: 'https://firebasestorage.googleapis.com/v0/b/bazaar-179323.appspot.com/o/extensions%2Fsafeapp%2F0.1.0%2Fmobile%2Findex.__platform__.0.46.4.manifest.bundle?module=safeapp&alt=media#plugin'
-        }).then(() => {
-            alert('Push message sent')
-        })
+    sendPost = () => {
+        this.props.sendPost(this.state.promotedMessage)
     }
 
     showButtons = () => {
@@ -66,25 +38,25 @@ export default class CustomMessages extends Component {
                     Push Message
                     </p>
                     <form>
-                        <textarea className="questionInput" type="message" maxlength="140" value={this.state.pushMessage} onChange={this.pushMessageChanged} />
-                        <div className="buttonBox">
-                            <p className="buttonText">(Linked to Safety Check)</p>
-                            <input className="publishButton" type="submit" value="Submit" />
-                        </div>
+                        <textarea className="questionInput" type="message" maxLength="140" value={this.state.pushMessage} onChange={this.pushMessageChanged} />
                     </form>
+                    <div className="buttonBox">
+                        <p className="buttonText">(Linked to Safety Check)</p>
+                        <button className="publishButton" onClick={this.sendPush}>Submit</button>
+                    </div>
                 </span>
                 <span className="questionBox">
                     <p className="boxTitle">
                     Promoted Post
                     </p>
                     <form>
-                        <textarea className="questionInput" type="post" maxlength="140" value={this.state.promotedMessage} onChange={this.promotedMessageChanged} />
-                        <div className="buttonBox">
+                        <textarea className="questionInput" type="post" maxLength="140" value={this.state.promotedMessage} onChange={this.promotedMessageChanged} />
+                    </form>
+                    <div className="buttonBox">
                             <p className="buttonText">(Linked to Safety Check)</p>
                             <p className="buttonText">Pinned for 3 hours</p>
-                            <input className="publishButton" type="submit" value="Submit" />
-                        </div>
-                    </form>
+                            <button className="publishButton" onClick={this.sendPost}>Submit</button>
+                    </div>
                 </span>  
             </div>
             )
