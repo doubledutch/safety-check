@@ -34,10 +34,12 @@ class List extends Component {
             const users = this.props.listData;
             const listItems = users.map((user) =>
               <li className="listItem">
-                <p className="itemTitle">
-                    {user.firstName + " " + user.lastName}
-                </p>
-                {this.renderIcons()}
+                <span className="listItemBox">
+                    <p className="itemTitle">
+                        {user.firstName + " " + user.lastName}
+                    </p>
+                    {this.renderIcons()}
+                </span>
               </li>
             );
             return (
