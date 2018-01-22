@@ -7,7 +7,7 @@ import List from './List'
 import CustomModal from './Modal'
 import FirebaseConnector from '@doubledutch/firebase-connector'
 import {CSVLink, CSVDownload} from 'react-csv';
-const fbc = FirebaseConnector(client, 'safety-check-app')
+const fbc = FirebaseConnector(client, 'safetycheck')
 fbc.initializeAppWithSimpleBackend()
 
 class App extends Component {
