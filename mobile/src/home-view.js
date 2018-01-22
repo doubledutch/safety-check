@@ -6,7 +6,7 @@ import {Status} from './Status'
 import {Buttons} from './Buttons'
 import client, { Avatar, TitleBar } from '@doubledutch/rn-client'
 import FirebaseConnector from '@doubledutch/firebase-connector'
-const fbc = FirebaseConnector(client, 'safetycheck')
+const fbc = FirebaseConnector(client, 'safeapp')
 fbc.initializeAppWithSimpleBackend()
 
 export default class HomeView extends Component {
