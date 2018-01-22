@@ -19,7 +19,7 @@ export default class HomeView extends Component {
       currentStatus: false
     }
 
-    this.signin = fbc.signinAdmin()
+    this.signin = fbc.signin()
       .then(user => this.user = user)
       .catch(err => console.error(err))
   }
