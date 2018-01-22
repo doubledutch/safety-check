@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import ReactNative, {
-  KeyboardAvoidingView, Platform, TouchableOpacity, Text, TextInput, View, ScrollView, Image
+import {
+  Image, ScrollView, StyleSheet, Text, TouchableOpacity, View
 } from 'react-native'
 import {Status} from './Status'
 import {Buttons} from './Buttons'
@@ -87,13 +87,11 @@ export default class HomeView extends Component {
     fbc.database.private.adminableUserRef("status").set("OOA")
     .catch (x => console.error(x))
   }
-
- 
 }
 
 
 const fontSize = 18
-const s = ReactNative.StyleSheet.create({
+const s = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#d9e1f9',
