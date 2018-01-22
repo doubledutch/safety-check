@@ -135,10 +135,14 @@
 }
 
 .listItem{
-  height: 44px;
   border-bottom: 1px solid #DEDEDE;
   margin-left: 0px;
+  height: 44px;
+}
+
+.listItemBox{
   display: flex;
+  flex: 1;
   flex-direction: row;
 }
 
