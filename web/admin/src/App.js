@@ -127,7 +127,7 @@ class App extends Component {
         },
         LinkTypeId: 3,
         LinkText: 'Check in',
-        LinkValue: 'https://firebasestorage.googleapis.com/v0/b/bazaar-179323.appspot.com/o/extensions%2Fsafeapp%2F0.1.0%2Fmobile%2Findex.__platform__.0.46.4.manifest.bundle?module=safeapp&alt=media#plugin'
+        LinkValue: 'https://firebasestorage.googleapis.com/v0/b/bazaar-179323.appspot.com/o/extensions%2Fsafeapp%2F0.1.1%2Fmobile%2Findex.__platform__.0.46.4.manifest.bundle?module=safeapp&alt=media#plugin'
     }).then(() => {
         alert('Push message sent')
         this.setState({openVar: true, modalAlert: true, modalMessage: "Push Notification sent.", endCheck: false})
@@ -144,7 +144,7 @@ sendPromotedMessage = () => {
       },
       LinkTypeId: 3,
       LinkText: 'Check in',
-      LinkValue: 'https://firebasestorage.googleapis.com/v0/b/bazaar-179323.appspot.com/o/extensions%safeapp%2F0.1.0%2Fmobile%2Findex.__platform__.0.46.4.manifest.bundle?module=safeapp&alt=media#plugin'
+      LinkValue: 'https://firebasestorage.googleapis.com/v0/b/bazaar-179323.appspot.com/o/extensions%safeapp%2F0.1.1%2Fmobile%2Findex.__platform__.0.46.4.manifest.bundle?module=safeapp&alt=media#plugin'
   }).then(() => {
     this.setState({openVar: true, modalAlert: true, modalMessage: "Promoted Post created.", endCheck: false})
   })
