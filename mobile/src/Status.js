@@ -8,12 +8,9 @@ import ReactNative, {
 export class Status extends Component {
   constructor(props) {
       super(props)
-
   }
 
   renderMessage = () => {
-      const userID = this.props.userID
-      
       if (this.props.currentStatus) {
         if (this.props.status === "safe") {
             return (

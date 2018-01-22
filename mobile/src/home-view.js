@@ -68,10 +68,9 @@ export default class HomeView extends Component {
         <TitleBar title="Safety Check" client={client} signin={this.signin} />
         <ScrollView style={s.container}>
           <Status
-          checkStatus = {this.state.checkStatus}
-          currentStatus = {this.state.currentStatus}
-          status = {this.state.status}
-          userID = {client.currentUser.id}
+          checkStatus={this.state.checkStatus}
+          currentStatus={this.state.currentStatus}
+          status={this.state.status}
           />
           {this.showButtons()}
         </ScrollView>
