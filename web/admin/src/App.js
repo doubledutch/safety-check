@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import './App.css'
-import Modal  from 'react-modal'
 import client from '@doubledutch/admin-client'
 import CustomMessages from './CustomMessages'
 import List from './List'
 import CustomModal from './Modal'
 import FirebaseConnector from '@doubledutch/firebase-connector'
-import {CSVLink, CSVDownload} from 'react-csv';
+import { CSVDownload } from 'react-csv';
 const fbc = FirebaseConnector(client, 'safeapp')
 fbc.initializeAppWithSimpleBackend()
 
@@ -91,6 +90,7 @@ class App extends Component {
     return (
       <div className="App">
         <CustomModal
+        appElement={this}
         openVar = {this.state.openVar}
         closeModal = {this.closeModal}
         startCheck = {this.startCheck}
@@ -134,10 +134,10 @@ class App extends Component {
     })
 }
 
-sendPromotedMessage = () => {
+sendPromotedMessage = (promotedMessage) => {
   client.cmsRequest('POST', '/api/messages', {
       Type: 'Promoted',
-      Text: this.state.promotedMessage,
+      Text: promotedMessage,
       Schedule: {
           Now: true,
           DurationInMinutes: 20

@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
 import './App.css'
-import Modal  from 'react-modal'
-import ReactDOM from 'react-dom'
-import client, {Color} from '@doubledutch/admin-client'
 
 export default class CustomMessages extends Component {
     constructor(props){

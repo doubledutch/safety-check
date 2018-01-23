@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
 import Modal  from 'react-modal'
-import ReactDOM from 'react-dom'
-import {CSVLink, CSVDownload} from 'react-csv';
-import client, {Color} from '@doubledutch/admin-client'
 
 export class CustomModal extends Component {
     constructor(props){
@@ -14,26 +11,26 @@ export class CustomModal extends Component {
     }
 
     render() {
-        const questions = this.props.questions
         return(
-        <Modal 
-        isOpen={this.props.openVar}
-        onAfterOpen={this.props.afterOpenModal}
-        onRequestClose={this.props.closeModal}
-        contentLabel="Modal"
-        className="Modal"
-        overlayClassName="Overlay"
-        >
-            <div>
-                {this.modalX()}
-                <div className="modalTextBox">
-                    {this.modalMessage()}
+            <Modal
+            ariaHideApp={false}
+            isOpen={this.props.openVar}
+            onAfterOpen={this.props.afterOpenModal}
+            onRequestClose={this.props.closeModal}
+            contentLabel="Modal"
+            className="Modal"
+            overlayClassName="Overlay"
+            >
+                <div>
+                    {this.modalX()}
+                    <div className="modalTextBox">
+                        {this.modalMessage()}
+                    </div>
+                    <div className="modalButtonBox">
+                        {this.modalButtons()}
+                    </div >    
                 </div>
-                <div className="modalButtonBox">
-                    {this.modalButtons()}
-                </div >    
-            </div>
-        </Modal>
+            </Modal>
         )
     }
 

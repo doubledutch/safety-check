@@ -1,9 +1,5 @@
 import React, { Component } from 'react'
 import './App.css'
-import Modal  from 'react-modal'
-import ReactDOM from 'react-dom'
-import client, {Color} from '@doubledutch/admin-client'
-
 
 class List extends Component {
     constructor(props){
@@ -17,15 +13,16 @@ class List extends Component {
     renderIcons = () => {
         switch(this.props.listName) {
             case "Marked As Safe" :
-            return(
-                <img className='button1' src={require('./icons/checkocircle.png')}/>
-            )
+                return(
+                    <img className='button1' src={require('./icons/checkocircle.png')} alt="Safe" />
+                )
 
             case "Not in Area" :
-            return(
-                <img className='button2' src={require('./icons/check.png')}/>
-            )
-        
+                return(
+                    <img className='button2' src={require('./icons/check.png')} alt="Not in Area" />
+                )
+            default:
+                return null
     }
 }
 
@@ -33,7 +30,7 @@ class List extends Component {
         if (this.props.listData){
             const users = this.props.listData;
             const listItems = users.map((user) =>
-              <li className="listItem">
+              <li className="listItem" key={user.id}>
                 <span className="listItemBox">
                     <p className="itemTitle">
                         {user.firstName + " " + user.lastName}
@@ -57,10 +54,10 @@ class List extends Component {
         }
         return(
             <span className="listBox">
-            <p className="boxTitle">
-            {this.props.listName + " (" + total + ")" }
-            </p>
-            {this.listData()}
+                <p className="boxTitle">
+                    {this.props.listName + " (" + total + ")" }
+                </p>
+                {this.listData()}
             </span>
         )
     }
