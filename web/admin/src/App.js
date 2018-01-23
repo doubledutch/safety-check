@@ -90,7 +90,6 @@ class App extends Component {
     return (
       <div className="App">
         <CustomModal
-        appElement={this}
         openVar = {this.state.openVar}
         closeModal = {this.closeModal}
         startCheck = {this.startCheck}
