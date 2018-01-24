@@ -5,7 +5,7 @@ import CustomMessages from './CustomMessages'
 import List from './List'
 import CustomModal from './Modal'
 import FirebaseConnector from '@doubledutch/firebase-connector'
-import { CSVDownload } from 'react-csv';
+import { CSVDownload, CSVLink } from 'react-csv';
 const fbc = FirebaseConnector(client, 'safeapp')
 fbc.initializeAppWithSimpleBackend()
 
@@ -52,11 +52,11 @@ class App extends Component {
             newUser.id !== data.key
           )
           if (data.val().status === "safe"){
-            newUser[0].status = "safe"
+            newUser[0].status = "Safe"
             this.setState({ safeUsers: this.state.safeUsers.concat(newUser), unknownUsers: newList, active: true})
           }
           if (data.val().status === "OOA"){
-            newUser[0].status = "OOA"
+            newUser[0].status = "Out of Area"
             this.setState({ ooaUsers: this.state.safeUsers.concat(newUser), unknownUsers: newList, active: true})
           }
       })
@@ -111,7 +111,6 @@ class App extends Component {
         testMessage = "A security incident has occurred. Mark yourself 'safe' if you are okay."
         />
         {this.showActiveCheck()}
-        {this.runCSV()}
       </div>
     )
   }
@@ -149,19 +148,6 @@ sendPromotedMessage = (promotedMessage) => {
   })
 }
 
-  runCSV = (list) => {
-    if (this.state.exportList){
-      return(
-      <div>
-        <CSVDownload className="modalExport1" data={this.state.unknownUsers} separator={";"}>Export to CSV</CSVDownload>
-        <CSVDownload className="modalExport1" data={this.state.safeUsers} separator={";"}>Export to CSV</CSVDownload>
-        <CSVDownload className="modalExport1" data={this.state.ooaUsers} separator={";"}>Export to CSV</CSVDownload>
-        {this.setState({exportList: false})}
-      </div>
-      )
-    }
-  }
-
   showActiveCheck = () => {
     if (this.state.active) {
       return (    
@@ -198,8 +184,9 @@ sendPromotedMessage = (promotedMessage) => {
 
   showCSV = () => {
     if (this.state.active){
+      const csvData = this.state.safeUsers.concat(this.state.ooaUsers).concat(this.state.unknownUsers)
       return (
-        <button className="csvButton" style={{marginLeft: 10}} onClick={this.makeExport}>Export Lists to CSV</button>
+        <CSVLink className="csvButton" style={{marginLeft: 10}} data={csvData} filename={"attendee-list.csv"} separator={","}>Export Lists to CSV</CSVLink>
       )
     }
   }

@@ -44,14 +44,15 @@
 }
 
 .csvButton{
+  text-decoration: none;
   background-color: #F0F0F0;
   border: 1px solid #979797;
   border-radius: 2px;
   font-family: -apple-system, BlinkMacSystemFont, 'Fira Sans', 'Open Sans', 'Helvetica Neue', sans-serif;
   color: #4A4A4A;
   font-size: 13px;
-  height: 34px;
   margin-top: 10px;
+  padding: 8px;
 }
 
 .questionBox {
