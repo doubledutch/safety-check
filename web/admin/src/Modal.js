@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './App.css'
 import Modal  from 'react-modal'
+import { CSVLink } from 'react-csv';
 
 export class CustomModal extends Component {
     constructor(props){
@@ -86,7 +87,7 @@ export class CustomModal extends Component {
         if (this.props.endCheck) {
             return (
                 <div>
-                    <button className="modalExport1" onClick={this.props.makeExport}>Export to CSV</button>
+                    <CSVLink className="modalExport" data={this.props.allUsers} filename={"attendee-list.csv"} >Export to CSV</CSVLink>
                     <button className="modalDone" onClick={this.props.closeModal}>Done</button>
                 </div>
             )
