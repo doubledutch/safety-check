@@ -44,15 +44,15 @@ export default class CustomMessages extends Component {
                 </span>
                 <span className="questionBox">
                     <p className="boxTitle">
-                      Promoted Post
+                    Promoted Post
                     </p>
                     <form>
                         <textarea className="questionInput" type="post" maxLength="140" value={this.state.promotedMessage} onChange={this.promotedMessageChanged} />
                     </form>
                     <div className="buttonBox">
-                      <p className="buttonText">(Linked to Safety Check)</p>
-                      <p className="buttonText">Pinned for 3 hours</p>
-                      <button className="publishButton" onClick={this.sendPost}>Submit</button>
+                            <p className="buttonText">(Linked to Safety Check)</p>
+                            <p className="buttonText">Pinned for 3 hours</p>
+                            <button className="publishButton" onClick={this.sendPost}>Submit</button>
                     </div>
                 </span>  
             </div>
@@ -63,7 +63,7 @@ export default class CustomMessages extends Component {
     render(){
         return (
             <div>
-              {this.showButtons()}
+            {this.showButtons()}
             </div>
         )
     }

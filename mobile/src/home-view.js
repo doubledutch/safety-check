@@ -14,7 +14,7 @@ export default class HomeView extends Component {
     super()
     this.state = { 
       status: "", 
-      check: null, 
+      check: [], 
       checkStatus: false, 
       currentStatus: false
     }
@@ -26,16 +26,15 @@ export default class HomeView extends Component {
 
   componentDidMount() {
     this.signin.then(() => {
-      const checkRef = fbc.database.public.adminRef("check")
+      const sharedRef = fbc.database.public.adminRef("checks")
       const userRef = fbc.database.private.adminableUserRef()
 
-      checkRef.on('value', data => {
-        if (data.val() == null) {
-          this.setState({check: null, status: "", checkStatus: false, currentStatus: false })
-        }
-        if (data.val()){
-          this.setState({ check: data.val(), checkStatus: true })
-        }
+      sharedRef.on('child_added', data => {
+        this.setState({ check: data.val(), checkStatus: true })
+      })
+
+      sharedRef.on('child_removed', data => {
+        this.setState({check: "", status: "", checkStatus: false, currentStatus: false })
       })
 
       userRef.on('child_added', data => {
