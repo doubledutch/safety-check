@@ -5,7 +5,7 @@ import CustomMessages from './CustomMessages'
 import List from './List'
 import CustomModal from './Modal'
 import FirebaseConnector from '@doubledutch/firebase-connector'
-import { CSVDownload, CSVLink } from 'react-csv';
+import { CSVLink } from 'react-csv';
 const fbc = FirebaseConnector(client, 'safeapp')
 fbc.initializeAppWithSimpleBackend()
 
@@ -13,15 +13,12 @@ class App extends Component {
   constructor() {
     super()
     this.state = { 
-      active: false,
-      showButtons: false,
+      showButtons: null,
       status: [], 
-      check: "", 
+      check: null, 
       safeUsers: [],
-      unknownUsers : [],
       ooaUsers: [],
       allUsers: [],
-      exportList: false,
       openVar: false,
       modalAlert: false,
       endCheck: false,
@@ -36,54 +33,35 @@ class App extends Component {
 
     this.signin.then(() => {
       client.getUsers().then(users => {
-      this.setState({allUsers: users, unknownUsers: users})
-      const sharedRef = fbc.database.public.adminRef("checks")
-      const adminableRef = fbc.database.private.adminableUsersRef()
-    
-      sharedRef.on('child_added', data => {
-        this.setState({ check: {...data.val(), key: data.key}, active: true, showButtons: true, endCheck: false})
-      })
+        this.setState({allUsers: users})
+        const checkRef = fbc.database.public.adminRef("check")
+        const adminableRef = fbc.database.private.adminableUsersRef()
+      
+        checkRef.on('value', data => {
+          const check = data.val() || false
+          this.setState({ check, showButtons: true, endCheck: false, openVar: false})
+        })
 
-      adminableRef.on('child_added', data => {
-          var newUser = this.state.unknownUsers.filter(newUser => 
-            newUser.id === data.key
-          )
-          var newList = this.state.unknownUsers.filter(newUser => 
-            newUser.id !== data.key
-          )
+        adminableRef.on('child_added', data => {
+          var newUser = this.state.allUsers.find(newUser => newUser.id === data.key)
           if (data.val().status === "safe"){
-            newUser[0].status = "Safe"
-            this.setState({ safeUsers: this.state.safeUsers.concat(newUser), unknownUsers: newList, active: true})
+            newUser.status = "Safe"
+            this.setState({ safeUsers: this.state.safeUsers.concat(newUser)})
           }
           if (data.val().status === "OOA"){
-            newUser[0].status = "Out of Area"
-            this.setState({ ooaUsers: this.state.safeUsers.concat(newUser), unknownUsers: newList, active: true})
-          }
-      })
+            newUser.status = "Out of Area"
+            this.setState({ ooaUsers: this.state.safeUsers.concat(newUser)})
+          }      
+        })
 
-      adminableRef.on('child_changed', data => {
-          var newUser = this.state.unknownUsers.filter(newUser => 
-            newUser.id === data.key
-          )
-          var newList = this.state.unknownUsers.filter(newUser => 
-            newUser.id !== data.key
-          )
-          if (data.val() === "safe"){
-            newUser[0].status = "safe"
-            this.setState({ safeUsers: this.state.safeUsers.concat(newUser), unknownUsers: newList, active: true})
+        adminableRef.on('value', data => {
+          if (data.val() == null) {
+            this.setState({ooaUser: [], safeUsers: [], showButtons: true})
           }
-          if (data.val() === "OOA"){
-            newUser[0].status = "OOA"
-            this.setState({ ooaUsers: this.state.safeUsers.concat(newUser), unknownUsers: newList, active: true})
-          } 
+        })
       })
-
-      sharedRef.on('child_removed', data => {
-        this.setState({check: "", currentStatus: false, showButtons: false})
-      }) 
     })
-  })
-    .catch(err => console.error(err)) 
+    .catch(err => alert(err))
   }
 
   render() {
@@ -95,7 +73,7 @@ class App extends Component {
         startCheck = {this.startCheck}
         endCheck = {this.state.endCheck}
         active = {this.state.showButtons}
-        makeExport = {this.makeExport}
+        allUsers = {this.state.allUsers}
         modalMessage = {this.state.modalMessage}
         modalAlert = {this.state.modalAlert}
         />
@@ -105,7 +83,7 @@ class App extends Component {
           {this.showCSV()}
         </div>
         <CustomMessages
-        active = {this.state.showButtons}
+        active = {this.state.check}
         sendPush = {this.sendPushMessage}
         sendPost = {this.sendPromotedMessage}
         testMessage = "A security incident has occurred. Mark yourself 'safe' if you are okay."
@@ -116,7 +94,6 @@ class App extends Component {
   }
 
   sendPushMessage = (pushMessage) => {
-    alert('Push message sent')
     client.cmsRequest('POST', '/api/messages', {
         Type: 'Push',
         Text: pushMessage,
@@ -127,7 +104,6 @@ class App extends Component {
         LinkText: 'Check in',
         LinkValue: 'https://firebasestorage.googleapis.com/v0/b/bazaar-179323.appspot.com/o/extensions%2Fsafeapp%2F0.1.1%2Fmobile%2Findex.__platform__.0.46.4.manifest.bundle?module=safeapp&alt=media#plugin'
     }).then(() => {
-        alert('Push message sent')
         this.setState({openVar: true, modalAlert: true, modalMessage: "Push Notification sent.", endCheck: false})
     })
 }
@@ -149,11 +125,11 @@ sendPromotedMessage = (promotedMessage) => {
 }
 
   showActiveCheck = () => {
-    if (this.state.active) {
+    if (this.isActive()) {
       return (    
         <div className="statusesBox">
           <List
-          listData = {this.state.unknownUsers}
+          listData = {this.unknownUsers()}
           listName = {"Not Checked In"}
           /> 
           <List
@@ -169,8 +145,14 @@ sendPromotedMessage = (promotedMessage) => {
     }
   }
 
+  unknownUsers = () => this.state.allUsers.filter(u => !this.state.safeUsers.includes(u) && !this.state.ooaUsers.includes(u))
+
+  isActive = () => !!(this.state.check || this.state.safeUsers.length || this.state.ooaUsers.length)
+
   showActivate = () => {
-    if (this.state.showButtons) {
+    if (this.state.check == null) {
+      return <div>Loading...</div>
+    } else if (this.state.check) {
       return (
         <button className="qaButtonOff" onClick={this.endCheck}>Deactivate Safety Check</button>
       )
@@ -183,32 +165,24 @@ sendPromotedMessage = (promotedMessage) => {
   }
 
   showCSV = () => {
-    if (this.state.active){
-      const csvData = this.state.safeUsers.concat(this.state.ooaUsers).concat(this.state.unknownUsers)
+    if (this.isActive()){
       return (
-        <CSVLink className="csvButton" style={{marginLeft: 10}} data={csvData} filename={"attendee-list.csv"} separator={","}>Export Lists to CSV</CSVLink>
+        <CSVLink className="csvButton" style={{marginLeft: 10}} data={this.state.allUsers} filename={"attendee-list.csv"}>Export Lists to CSV</CSVLink>
       )
     }
   }
 
   startCheck = () => {
-    this.setState({active: true, check: [], ooaUsers: [], safeUsers: [], unknownUsers: this.state.allUsers, openVar: false, showButtons: true})
     fbc.database.private.adminableUsersRef().remove()
-    .catch (x => console.error(x))
-    fbc.database.public.adminRef('checks').push(true)
-    .catch (x => console.error(x))
+      .catch (x => console.error(x))
+    fbc.database.public.adminRef('check').set(true)
+      .catch (x => console.error(x))
   }
 
   endCheck = () => {
-    var mod = this.state.check
-    fbc.database.public.adminRef('checks').child(mod.key).remove()
+    fbc.database.public.adminRef('check').remove()
     .catch (x => console.error(x))
     .then(() => this.setState({endCheck: true, openVar: true, modalAlert: false}))
-  }
-
-  makeExport = () => {
-    this.setState({openVar: false, exportList: true});
-    this.closeModal()
   }
 
   openModal = () => {
