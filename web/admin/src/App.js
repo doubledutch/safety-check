@@ -9,7 +9,7 @@ import { CSVLink } from 'react-csv';
 const fbc = FirebaseConnector(client, 'safeapp')
 fbc.initializeAppWithSimpleBackend()
 
-class App extends Component {
+export default class App extends Component {
   constructor() {
     super()
     this.state = { 
@@ -95,34 +95,34 @@ class App extends Component {
 
   sendPushMessage = (pushMessage) => {
     client.cmsRequest('POST', '/api/messages', {
-        Type: 'Push',
-        Text: pushMessage,
-        Schedule: {
-            Now: true
-        },
-        LinkTypeId: 3,
-        LinkText: 'Check in',
-        LinkValue: 'https://firebasestorage.googleapis.com/v0/b/bazaar-179323.appspot.com/o/extensions%2Fsafeapp%2F0.1.1%2Fmobile%2Findex.__platform__.0.46.4.manifest.bundle?module=safeapp&alt=media#plugin'
+      Type: 'Push',
+      Text: pushMessage,
+      Schedule: {
+        Now: true
+      },
+      LinkTypeId: 3,
+      LinkText: 'Check in',
+      LinkValue: 'https://firebasestorage.googleapis.com/v0/b/bazaar-179323.appspot.com/o/extensions%2Fsafeapp%2F0.1.1%2Fmobile%2Findex.__platform__.0.46.4.manifest.bundle?module=safeapp&alt=media#plugin'
     }).then(() => {
-        this.setState({openVar: true, modalAlert: true, modalMessage: "Push Notification sent.", endCheck: false})
+      this.setState({openVar: true, modalAlert: true, modalMessage: "Push Notification sent.", endCheck: false})
     })
-}
+  }
 
-sendPromotedMessage = (promotedMessage) => {
-  client.cmsRequest('POST', '/api/messages', {
+  sendPromotedMessage = (promotedMessage) => {
+    client.cmsRequest('POST', '/api/messages', {
       Type: 'Promoted',
       Text: promotedMessage,
       Schedule: {
-          Now: true,
-          DurationInMinutes: 20
+        Now: true,
+        DurationInMinutes: 20
       },
       LinkTypeId: 3,
       LinkText: 'Check in',
       LinkValue: 'https://firebasestorage.googleapis.com/v0/b/bazaar-179323.appspot.com/o/extensions%safeapp%2F0.1.1%2Fmobile%2Findex.__platform__.0.46.4.manifest.bundle?module=safeapp&alt=media#plugin'
-  }).then(() => {
-    this.setState({openVar: true, modalAlert: true, modalMessage: "Promoted Post created.", endCheck: false})
-  })
-}
+    }).then(() => {
+      this.setState({openVar: true, modalAlert: true, modalMessage: "Promoted Post created.", endCheck: false})
+    })
+  }
 
   showActiveCheck = () => {
     if (this.isActive()) {
@@ -197,6 +197,3 @@ sendPromotedMessage = (promotedMessage) => {
     fbc.database.public.allRef('tasks').child(task.key).remove()
   }
 }
-
-
-export default App
