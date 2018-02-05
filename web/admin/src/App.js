@@ -100,6 +100,7 @@ export default class App extends Component {
       Schedule: {
         Now: true
       },
+      UserGroups: [],
       LinkTypeId: 3,
       LinkText: 'Check in',
       LinkValue: getExtensionUrl()
