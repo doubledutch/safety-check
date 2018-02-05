@@ -98,7 +98,8 @@ export default class App extends Component {
       Type: 'Push',
       Text: pushMessage,
       Schedule: {
-        Now: true
+        Now: true,
+        TimeZoneId: 7
       },
       UserGroups: [],
       LinkTypeId: 3,
