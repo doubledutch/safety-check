@@ -102,7 +102,7 @@ export default class App extends Component {
       },
       LinkTypeId: 3,
       LinkText: 'Check in',
-      LinkValue: 'https://firebasestorage.googleapis.com/v0/b/bazaar-179323.appspot.com/o/extensions%2Fsafeapp%2F0.1.1%2Fmobile%2Findex.__platform__.0.46.4.manifest.bundle?module=safeapp&alt=media#plugin'
+      LinkValue: getExtensionUrl()
     }).then(() => {
       this.setState({openVar: true, modalAlert: true, modalMessage: "Push Notification sent.", endCheck: false})
     })
@@ -118,7 +118,7 @@ export default class App extends Component {
       },
       LinkTypeId: 3,
       LinkText: 'Check in',
-      LinkValue: 'https://firebasestorage.googleapis.com/v0/b/bazaar-179323.appspot.com/o/extensions%safeapp%2F0.1.1%2Fmobile%2Findex.__platform__.0.46.4.manifest.bundle?module=safeapp&alt=media#plugin'
+      LinkValue: getExtensionUrl()
     }).then(() => {
       this.setState({openVar: true, modalAlert: true, modalMessage: "Promoted Post created.", endCheck: false})
     })
@@ -196,4 +196,12 @@ export default class App extends Component {
   markComplete(task) {
     fbc.database.public.allRef('tasks').child(task.key).remove()
   }
+}
+
+function getExtensionUrl() {
+  const urlFormat = 'https://firebasestorage.googleapis.com/v0/b/bazaar-179323.appspot.com/o/extensions%2FVERSIONED_EXTENSION%2Fmobile%2Findex.__platform__.0.46.4.manifest.bundle?module=safeapp&alt=media#plugin'
+  const matches = window.location.href.match(/\/extensions\/([^/]+\/[^/]+\/)/)
+  const versionedExtension = matches[1]
+  if (!versionedExtension) return null
+  return urlFormat.replace('VERSIONED_EXTENSION', versionedExtension.replace('/', '%2F'))
 }
