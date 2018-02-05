@@ -201,7 +201,7 @@ export default class App extends Component {
 
 function getExtensionUrl() {
   const urlFormat = 'https://firebasestorage.googleapis.com/v0/b/bazaar-179323.appspot.com/o/extensions%2FVERSIONED_EXTENSION%2Fmobile%2Findex.__platform__.0.46.4.manifest.bundle?module=safeapp&alt=media#plugin'
-  const matches = window.location.href.match(/\/extensions\/([^/]+\/[^/]+\/)/)
+  const matches = window.location.href.match(/\/extensions\/([^/]+\/[^/]+)\//)
   const versionedExtension = matches[1]
   if (!versionedExtension) return null
   return urlFormat.replace('VERSIONED_EXTENSION', versionedExtension.replace('/', '%2F'))
