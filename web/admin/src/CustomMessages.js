@@ -35,11 +35,12 @@ export default class CustomMessages extends Component {
                     Push Message
                     </p>
                     <form>
-                        <textarea className="questionInput" type="message" maxLength="140" value={this.state.pushMessage} onChange={this.pushMessageChanged} />
+                        <textarea className="questionInput" type="message" maxLength="140" value={this.state.pushMessage} onChange={this.pushMessageChanged}/>
+                        <p className="counterText">{140 - this.state.pushMessage.length}</p>
                     </form>
                     <div className="buttonBox">
                         <p className="buttonText">(Linked to Safety Check)</p>
-                        <button className="publishButton" onClick={this.sendPush}>Submit</button>
+                        <button className="publishButton" onClick={this.sendPush}>Publish</button>
                     </div>
                 </span>
                 <span className="questionBox">
@@ -48,11 +49,12 @@ export default class CustomMessages extends Component {
                     </p>
                     <form>
                         <textarea className="questionInput" type="post" maxLength="140" value={this.state.promotedMessage} onChange={this.promotedMessageChanged} />
+                        <p className="counterText">{140 - this.state.promotedMessage.length}</p>
                     </form>
                     <div className="buttonBox">
                       <p className="buttonText">(Linked to Safety Check)</p>
                       <p className="buttonText">Pinned for 3 hours</p>
-                      <button className="publishButton" onClick={this.sendPost}>Submit</button>
+                      <button className="publishButton" onClick={this.sendPost}>Publish</button>
                     </div>
                 </span>  
             </div>

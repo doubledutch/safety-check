@@ -25,7 +25,7 @@ export class Status extends Component {
             return (
                 <View>
                     <Text style={s.message}>
-                    You've been marked as out of area.
+                    You've been marked as not in area.
                     </Text>
                 </View>
                 )
@@ -98,7 +98,8 @@ const s = ReactNative.StyleSheet.create({
         flex: 1,
         margin: 20,
         borderBottomColor: '#a9a9a9',
-        borderBottomWidth: 1
+        borderBottomWidth: 1,
+        padding: 1
     },
 
     messageBox: {

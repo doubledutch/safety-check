@@ -50,13 +50,14 @@ export default class App extends Component {
           }
           if (data.val().status === "OOA"){
             newUser.status = "Out of Area"
-            this.setState({ ooaUsers: this.state.safeUsers.concat(newUser)})
+            this.setState({ ooaUsers: this.state.ooaUsers.concat(newUser)})
           }      
         })
 
         adminableRef.on('value', data => {
+          console.log("hello")
           if (data.val() == null) {
-            this.setState({ooaUser: [], safeUsers: [], showButtons: true})
+            this.setState({ooaUsers: [], safeUsers: [], showButtons: true})
           }
         })
       })
@@ -86,7 +87,7 @@ export default class App extends Component {
         active = {this.state.check}
         sendPush = {this.sendPushMessage}
         sendPost = {this.sendPromotedMessage}
-        testMessage = "A security incident has occurred. Mark yourself 'safe' if you are okay."
+        testMessage = "There has been an incident in the area. Please mark yourself as safe."
         />
         {this.showActiveCheck()}
       </div>
@@ -94,36 +95,42 @@ export default class App extends Component {
   }
 
   sendPushMessage = (pushMessage) => {
-    client.cmsRequest('POST', '/api/messages', {
-      Type: 'Push',
-      Text: pushMessage,
-      Schedule: {
-        Now: true,
-        TimeZoneId: 7
-      },
-      UserGroups: [],
-      LinkTypeId: 3,
-      LinkText: 'Check in',
-      LinkValue: getExtensionUrl()
-    }).then(() => {
-      this.setState({openVar: true, modalAlert: true, modalMessage: "Push Notification sent.", endCheck: false})
-    })
+    var message = pushMessage.trim()
+    if (message){
+      client.cmsRequest('POST', '/api/messages', {
+        Type: 'Push',
+        Text: pushMessage,
+        Schedule: {
+          Now: true,
+          TimeZoneId: 7
+        },
+        UserGroups: [],
+        LinkTypeId: 3,
+        LinkText: 'Check in',
+        LinkValue: getExtensionUrl()
+      }).then(() => {
+        this.setState({openVar: true, modalAlert: true, modalMessage: "Push Notification sent.", endCheck: false})
+      })
+    }
   }
 
   sendPromotedMessage = (promotedMessage) => {
-    client.cmsRequest('POST', '/api/messages', {
-      Type: 'Promoted',
-      Text: promotedMessage,
-      Schedule: {
-        Now: true,
-        DurationInMinutes: 20
-      },
-      LinkTypeId: 3,
-      LinkText: 'Check in',
-      LinkValue: getExtensionUrl()
-    }).then(() => {
-      this.setState({openVar: true, modalAlert: true, modalMessage: "Promoted Post created.", endCheck: false})
-    })
+    var message = promotedMessage.trim()
+    if (message){
+      client.cmsRequest('POST', '/api/messages', {
+        Type: 'Promoted',
+        Text: promotedMessage,
+        Schedule: {
+          Now: true,
+          DurationInMinutes: 20
+        },
+        LinkTypeId: 3,
+        LinkText: 'Check in',
+        LinkValue: getExtensionUrl()
+      }).then(() => {
+        this.setState({openVar: true, modalAlert: true, modalMessage: "Promoted Post created.", endCheck: false})
+      })
+    }
   }
 
   showActiveCheck = () => {
@@ -169,7 +176,7 @@ export default class App extends Component {
   showCSV = () => {
     if (this.isActive()){
       return (
-        <CSVLink className="csvButton" style={{marginLeft: 10}} data={this.state.allUsers} filename={"attendee-list.csv"}>Export Lists to CSV</CSVLink>
+        <CSVLink className="csvButton" style={{marginLeft: 10}} data={this.state.allUsers} filename={"attendee-list.csv"}>Export to CSV</CSVLink>
       )
     }
   }
