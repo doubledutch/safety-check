@@ -111,7 +111,12 @@ export default class App extends Component {
       }).then(() => {
         this.setState({openVar: true, modalAlert: true, modalMessage: "Push Notification sent.", endCheck: false})
       })
+      .catch(error => {alert("Please retry sending a Push Notification")})
     }
+    else {
+      alert("Please enter text to send a Push Notification")
+    }
+
   }
 
   sendPromotedMessage = (promotedMessage) => {
@@ -130,6 +135,10 @@ export default class App extends Component {
       }).then(() => {
         this.setState({openVar: true, modalAlert: true, modalMessage: "Promoted Post created.", endCheck: false})
       })
+      .catch(error => {alert("Please retry posting a Promoted Post")})
+    }
+    else {
+      alert("Please enter text to post a Promoted Post")
     }
   }
 
