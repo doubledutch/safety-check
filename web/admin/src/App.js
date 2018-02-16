@@ -106,12 +106,17 @@ export default class App extends Component {
         },
         UserGroups: [],
         LinkTypeId: 3,
-        LinkText: 'Check in',
+        LinkText: 'I Am Safe',
         LinkValue: getExtensionUrl()
       }).then(() => {
         this.setState({openVar: true, modalAlert: true, modalMessage: "Push Notification sent.", endCheck: false})
       })
+      .catch(error => {alert("Please retry sending a Push Notification")})
     }
+    else {
+      alert("Please enter text to send a Push Notification")
+    }
+
   }
 
   sendPromotedMessage = (promotedMessage) => {
@@ -125,11 +130,15 @@ export default class App extends Component {
           DurationInMinutes: 20
         },
         LinkTypeId: 3,
-        LinkText: 'Check in',
+        LinkText: 'I Am Safe',
         LinkValue: getExtensionUrl()
       }).then(() => {
         this.setState({openVar: true, modalAlert: true, modalMessage: "Promoted Post created.", endCheck: false})
       })
+      .catch(error => {alert("Please retry posting a Promoted Post")})
+    }
+    else {
+      alert("Please enter text to post a Promoted Post")
     }
   }
 
