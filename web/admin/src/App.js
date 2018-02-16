@@ -43,19 +43,20 @@ export default class App extends Component {
         })
 
         adminableRef.on('child_added', data => {
-          var newUser = this.state.allUsers.find(newUser => newUser.id === data.key)
-          if (data.val().status === "safe"){
-            newUser.status = "Safe"
-            this.setState({ safeUsers: this.state.safeUsers.concat(newUser)})
-          }
-          if (data.val().status === "OOA"){
-            newUser.status = "Out of Area"
-            this.setState({ ooaUsers: this.state.ooaUsers.concat(newUser)})
+          var newUser = users.find(newUser => newUser.id === data.key)
+          if (newUser){
+            if (data.val().status === "safe"){
+              newUser.status = "Safe"
+              this.setState({ safeUsers: this.state.safeUsers.concat(newUser)})
+            }
+            if (data.val().status === "OOA"){
+              newUser.status = "Out of Area"
+              this.setState({ ooaUsers: this.state.ooaUsers.concat(newUser)})
+            }
           }      
         })
 
         adminableRef.on('value', data => {
-          console.log("hello")
           if (data.val() == null) {
             this.setState({ooaUsers: [], safeUsers: [], showButtons: true})
           }
