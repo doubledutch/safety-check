@@ -96,6 +96,7 @@ export default class App extends Component {
   }
 
   sendPushMessage = (pushMessage) => {
+    var offset = new Date().getTimezoneOffset();
     var message = pushMessage.trim()
     if (message){
       client.cmsRequest('POST', '/api/messages', {
@@ -103,7 +104,7 @@ export default class App extends Component {
         Text: pushMessage,
         Schedule: {
           Now: true,
-          TimeZoneId: 7
+          TimeZoneId: offset/60
         },
         UserGroups: [],
         LinkTypeId: 3,
