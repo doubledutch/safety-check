@@ -172,7 +172,7 @@
   flex-direction: row;
   margin-right: 10px;
   margin-bottom: 11px;
-  overflow: scroll;
+  overflow-x: auto;
 }
 
 .button1 {
