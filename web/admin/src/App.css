@@ -144,7 +144,7 @@
   flex-direction: column;
   list-style: none;
   padding: 0px;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .listItem{
