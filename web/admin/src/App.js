@@ -96,7 +96,6 @@ export default class App extends Component {
   }
 
   sendPushMessage = (pushMessage) => {
-    // var offset = new Date().getTimezoneOffset();
     var message = pushMessage.trim()
     if (message){
       client.cmsRequest('POST', '/api/messages', {
