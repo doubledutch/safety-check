@@ -95,7 +95,7 @@ const fontSize = 18
 const s = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#d9e1f9',
+    backgroundColor: '#DEDEDE',
   },
   scroll: {
     flex: 1,
