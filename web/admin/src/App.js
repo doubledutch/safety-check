@@ -33,7 +33,7 @@ export default class App extends Component {
 
     this.signin.then(() => {
       client.getUsers().then(users => {
-        this.setState({allUsers: users})
+        this.setState({allUsers: users.sort(sortUsers)})
         const checkRef = fbc.database.public.adminRef("check")
         const adminableRef = fbc.database.private.adminableUsersRef()
       
@@ -223,4 +223,13 @@ function getExtensionUrl() {
   const versionedExtension = matches[1]
   if (!versionedExtension) return null
   return urlFormat.replace('VERSIONED_EXTENSION', versionedExtension.replace('/', '%2F'))
+}
+
+function sortUsers(a,b) {
+  const aFirst = a.firstName.toLowerCase()
+  const bFirst = b.firstName.toLowerCase()
+  const aLast = a.lastName.toLowerCase()
+  const bLast = b.firstName.toLowerCase()
+  if (aFirst !== bFirst) return aFirst < bFirst ? -1 : 1
+  return aLast < bLast ? -1 : 1
 }
