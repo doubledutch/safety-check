@@ -6,6 +6,7 @@ import {Status} from './Status'
 import {Buttons} from './Buttons'
 import client, { Avatar, TitleBar } from '@doubledutch/rn-client'
 import FirebaseConnector from '@doubledutch/firebase-connector'
+Text.defaultProps.allowFontScaling=false
 const fbc = FirebaseConnector(client, 'safeapp')
 fbc.initializeAppWithSimpleBackend()
 
