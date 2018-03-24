@@ -63,11 +63,15 @@ export default class App extends Component {
           if (newUser){
             if (data.val().status === "safe"){
               newUser.status = "Safe"
-              this.setState({ safeUsers: this.state.safeUsers.concat(newUser)})
+              var safeUsers = this.state.safeUsers.concat(newUser)
+              safeUsers.sort(sortUsers)
+              this.setState({ safeUsers })
             }
             if (data.val().status === "OOA"){
               newUser.status = "Out of Area"
-              this.setState({ ooaUsers: this.state.ooaUsers.concat(newUser)})
+              var ooaUsers = this.state.ooaUsers.concat(newUser)
+              ooaUsers.sort(sortUsers)
+              this.setState({ ooaUsers })
             }
           }      
         })
