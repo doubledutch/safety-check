@@ -15,16 +15,10 @@
  */
 
 import React, { Component } from 'react'
-import ReactNative, {
-  KeyboardAvoidingView, Platform, TouchableOpacity, Text, TextInput, View, ScrollView
-} from 'react-native'
+import { TouchableOpacity, Text, View } from 'react-native'
 
 export class Buttons extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-    }
-  }
+    state = {}
 
     renderButtons = () => {
         if (this.props.checkStatus && this.props.currentStatus === false){
@@ -43,9 +37,6 @@ export class Buttons extends Component {
             </View>
             )
         }
-
-        
-
     }
 
   render(){
@@ -55,23 +46,4 @@ export class Buttons extends Component {
         </View>
         )
     }
-
 }
-
-
-const s = ReactNative.StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: 'white',
-    },
-    button: {
-        borderColor: this.buttonColor,
-        borderWidth:1,
-        backgroundColor:'#FFFFFF',
-        borderRadius:4, 
-        height: 50, 
-        justifyContent: 'center', 
-        alignItems: 'center',
-    }
-
-})

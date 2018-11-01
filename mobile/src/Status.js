@@ -15,17 +15,9 @@
  */
 
 import React, { Component } from 'react'
-import ReactNative, {
-  KeyboardAvoidingView, Platform, TouchableOpacity, Text, TextInput, View, ScrollView, Image
-} from 'react-native'
-
-
+import { StyleSheet, Text, View, Image } from 'react-native'
 
 export class Status extends Component {
-  constructor(props) {
-      super(props)
-  }
-
   renderMessage = () => {
       if (this.props.currentStatus) {
         if (this.props.status === "safe") {
@@ -99,17 +91,13 @@ export class Status extends Component {
         </View>
     )
   }
-
-
 }
 
-
-const s = ReactNative.StyleSheet.create({
+const s = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: 'white',
     },
-
     iconBox: {
         flex: 1,
         margin: 20,
@@ -117,7 +105,6 @@ const s = ReactNative.StyleSheet.create({
         borderBottomWidth: 1,
         padding: 1
     },
-
     messageBox: {
         flex: 1,
         margin: 20,
@@ -125,14 +112,12 @@ const s = ReactNative.StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-
     message: {
         flex: 1,
         textAlign: "center",
         fontSize: 18,
         color: "#4a4a4a"
     },
-
     secondMessage: {
         flex: 1,
         fontWeight: "bold",
@@ -140,7 +125,4 @@ const s = ReactNative.StyleSheet.create({
         fontSize: 18,
         marginTop: 5
     }
-
-
 })
-

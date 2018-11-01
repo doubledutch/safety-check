@@ -14,20 +14,18 @@
  * limitations under the License.
  */
 
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import './App.css'
 import client from '@doubledutch/admin-client'
 import CustomMessages from './CustomMessages'
 import List from './List'
 import CustomModal from './Modal'
-import FirebaseConnector from '@doubledutch/firebase-connector'
+import {provideFirebaseConnectorToReactComponent} from '@doubledutch/firebase-connector'
 import { CSVLink } from 'react-csv';
-const fbc = FirebaseConnector(client, 'safeapp')
-fbc.initializeAppWithSimpleBackend()
 
-export default class App extends Component {
-  constructor() {
-    super()
+class App extends PureComponent {
+  constructor(props) {
+    super(props)
     this.state = { 
       showButtons: null,
       status: [], 
@@ -40,15 +38,15 @@ export default class App extends Component {
       endCheck: false,
       modalMessage: ""
      }
-    this.signin = fbc.signinAdmin()
+    this.signin = props.fbc.signinAdmin()
       .then(user => this.user = user)
       .catch(err => console.error(err))
   }
 
   componentDidMount() {
-
+    const {fbc} = this.props
     this.signin.then(() => {
-      client.getUsers().then(users => {
+      client.getAttendees().then(users => {
         this.setState({allUsers: users.sort(sortUsers)})
         const checkRef = fbc.database.public.adminRef("check")
         const adminableRef = fbc.database.private.adminableUsersRef()
@@ -212,16 +210,17 @@ export default class App extends Component {
   }
 
   startCheck = () => {
+    const {fbc} = this.props
     fbc.database.private.adminableUsersRef().remove()
-      .catch (x => console.error(x))
+      .catch(x => console.error(x))
     fbc.database.public.adminRef('check').set(true)
-      .catch (x => console.error(x))
+      .catch(x => console.error(x))
   }
 
   endCheck = () => {
-    fbc.database.public.adminRef('check').remove()
-    .catch (x => console.error(x))
-    .then(() => this.setState({endCheck: true, openVar: true, modalAlert: false}))
+    this.props.fbc.database.public.adminRef('check').remove()
+      .catch (x => console.error(x))
+      .then(() => this.setState({endCheck: true, openVar: true, modalAlert: false}))
   }
 
   openModal = () => {
@@ -233,10 +232,13 @@ export default class App extends Component {
   }
 
   markComplete(task) {
-    fbc.database.public.allRef('tasks').child(task.key).remove()
+    this.props.fbc.database.public.allRef('tasks').child(task.key).remove()
   }
 }
 
+export default provideFirebaseConnectorToReactComponent(client, 'safeapp', (props, fbc) => <App {...props} fbc={fbc} />, PureComponent)
+
+// This hacky URL can be replaced with dd://extensions/safeapp in the fall of 2019 (a year after 8.1, which supports this, was released)
 function getExtensionUrl() {
   const urlFormat = 'https://firebasestorage.googleapis.com/v0/b/bazaar-179323.appspot.com/o/extensions%2FVERSIONED_EXTENSION%2Fmobile%2Findex.__platform__.0.46.4.manifest.bundle?module=safeapp&alt=media#plugin'
   const matches = window.location.href.match(/\/extensions\/([^/]+\/[^/]+)\//)
