@@ -14,21 +14,17 @@
  * limitations under the License.
  */
 
-import React, { Component } from 'react'
-import {
-  Image, ScrollView, StyleSheet, Text, TouchableOpacity, View
-} from 'react-native'
+import React, { PureComponent } from 'react'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import {Status} from './Status'
 import {Buttons} from './Buttons'
-import client, { Avatar, TitleBar } from '@doubledutch/rn-client'
-import FirebaseConnector from '@doubledutch/firebase-connector'
+import client, { TitleBar } from '@doubledutch/rn-client'
+import {provideFirebaseConnectorToReactComponent} from '@doubledutch/firebase-connector'
 Text.defaultProps.allowFontScaling=false
-const fbc = FirebaseConnector(client, 'safeapp')
-fbc.initializeAppWithSimpleBackend()
 
-export default class HomeView extends Component {
-  constructor() {
-    super()
+class HomeView extends PureComponent {
+  constructor(props) {
+    super(props)
     this.state = { 
       status: "", 
       check: null, 
@@ -36,23 +32,24 @@ export default class HomeView extends Component {
       currentStatus: false
     }
 
-    this.signin = fbc.signin()
+    this.signin = props.fbc.signin()
       .then(user => this.user = user)
 
     this.signin.catch(err => console.error(err))
   }
 
   componentDidMount() {
+    const {fbc} = this.props
     this.signin.then(() => {
       const checkRef = fbc.database.public.adminRef("check")
       const userRef = fbc.database.private.adminableUserRef()
 
       checkRef.on('value', data => {
-        if (data.val() == null) {
+        const check = data.val()
+        if (check) {
+          this.setState({ check, checkStatus: true })          
+        } else {
           this.setState({check: null, status: "", checkStatus: false, currentStatus: false })
-        }
-        if (data.val()){
-          this.setState({ check: data.val(), checkStatus: true })
         }
       })
 
@@ -63,10 +60,8 @@ export default class HomeView extends Component {
       userRef.on('child_changed', data => {
         this.setState({ status: data.val(), currentStatus: true })
       })
-     
     })
   }
-
 
   showButtons = () => {
     if (this.state.checkStatus && this.state.currentStatus !== undefined) {
@@ -83,7 +78,7 @@ export default class HomeView extends Component {
 
   render() {
     return (
-      <View title="" style={{ flex: 1,backgroundColor:'#E8E8E8' }}>
+      <View style={{ flex: 1,backgroundColor:'#E8E8E8' }}>
         <TitleBar title="Safety Check" client={client} signin={this.signin} />
         <ScrollView style={s.container}>
           <Status
@@ -98,16 +93,17 @@ export default class HomeView extends Component {
   }
 
   markSafe = () => {
-    fbc.database.private.adminableUserRef("status").set("safe")
+    this.props.fbc.database.private.adminableUserRef("status").set("safe")
     .catch (x => console.error(x))
   }
 
   markOOA = () => {
-    fbc.database.private.adminableUserRef("status").set("OOA")
+    this.props.fbc.database.private.adminableUserRef("status").set("OOA")
     .catch (x => console.error(x))
   }
 }
 
+export default provideFirebaseConnectorToReactComponent(client, 'safeapp', (props, fbc) => <HomeView {...props} fbc={fbc} />, PureComponent)
 
 const fontSize = 18
 const s = StyleSheet.create({
