@@ -20,20 +20,16 @@ import Modal from 'react-modal'
 import { CSVLink } from 'react-csv'
 
 export class CustomModal extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      value: '',
-    }
-  }
+  state = { value: '' }
 
   render() {
+    const { openVar, afterOpenModal, closeModal } = this.props
     return (
       <Modal
         ariaHideApp={false}
-        isOpen={this.props.openVar}
-        onAfterOpen={this.props.afterOpenModal}
-        onRequestClose={this.props.closeModal}
+        isOpen={openVar}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
         contentLabel="Modal"
         className="Modal"
         overlayClassName="Overlay"
@@ -52,81 +48,100 @@ export class CustomModal extends Component {
   }
 
   modalX = () => {
-        if (this.props.active) {
-            return (
-                <button className="closeButton" onClick={this.props.closeModal}>X</button>
-            )
-        }
-        
-            return(
-                <button className="closeButton" onClick={this.props.closeModal}>X</button>
-            )
-        
+    if (this.props.active) {
+      return (
+        <button className="closeButton" onClick={this.props.closeModal}>
+          X
+        </button>
+      )
     }
 
+    return (
+      <button className="closeButton" onClick={this.props.closeModal}>
+        X
+      </button>
+    )
   }
 
   modalMessage = () => {
-        if (this.props.endCheck) {
-            return (
-                <div>
-                    <p className="modalHeadline">Safety Check has been deactivated</p>
-                    <p className="modalText">We suggest sending a push message alerting your attendees the event area is safe.</p>
-                    <p className="modalText">Would you like to export the attendee check-in lists?</p>
-                </div>
-            )    
-        }
-        else {
-            if (this.props.modalAlert){
-                return (
-                    <div>
-                        <p className="modalHeadline">Success</p>
-                        <p className="modalText" style={{marginBottom: 75}}>{this.props.modalMessage}</p>
-                    </div>
-                )
-            }
-            
-              return (
-                <div>
-                    <p className="modalHeadline">Confirm to activate Safety Check</p>
-                    <p className="modalText">We suggest sending a push message & creating a promoted post alerting your attendees about the incident and to check-in.</p>
-                    <p className="modalText">Are you sure you want to active a Safety Check?</p>
-                </div>
-                )
-            
-        }
+    if (this.props.endCheck) {
+      return (
+        <div>
+          <p className="modalHeadline">Safety Check has been deactivated</p>
+          <p className="modalText">
+            We suggest sending a push message alerting your attendees the event area is safe.
+          </p>
+          <p className="modalText">Would you like to export the attendee check-in lists?</p>
+        </div>
+      )
     }
+
+    if (this.props.modalAlert) {
+      return (
+        <div>
+          <p className="modalHeadline">Success</p>
+          <p className="modalText" style={{ marginBottom: 75 }}>
+            {this.props.modalMessage}
+          </p>
+        </div>
+      )
+    }
+
+    return (
+      <div>
+        <p className="modalHeadline">Confirm to activate Safety Check</p>
+        <p className="modalText">
+          We suggest sending a push message &amp; creating a promoted post alerting your attendees
+          about the incident and to check-in.
+        </p>
+        <p className="modalText">Are you sure you want to active a Safety Check?</p>
+      </div>
+    )
+  }
 
   modalButtons = () => {
-        if (this.props.endCheck) {
-            return (
-                <div>
-                    <CSVLink className="modalExport" data={this.props.allUsers} filename={"attendee-list.csv"} >Export to CSV</CSVLink>
-                    <button className="modalDone" onClick={this.props.closeModal}>Done</button>
-                </div>
-            )
-        }
-        else {
-            if (this.props.modalAlert){
-                return (
-                    <div>
-                        <button className="modalDone" style={{marginLeft: 30}} onClick={this.props.closeModal}>Done</button>
-                    </div>
-                )
-            }
-            
-                return (
-                    <div>
-                        <button className="modalExport1" onClick={this.props.startCheck}>Activate</button>
-                        <button className="modalDone" onClick={this.props.closeModal}>Cancel</button>
-                    </div>
-                )
-            
-        }
+    const { endCheck, allUsers, closeModal, modalAlert } = this.props
+    if (endCheck) {
+      return (
+        <div>
+          <CSVLink className="modalExport" data={allUsers} filename="attendee-list.csv">
+            Export to CSV
+          </CSVLink>
+          <button type="button" className="modalDone" onClick={closeModal}>
+            Done
+          </button>
+        </div>
+      )
     }
 
+    if (modalAlert) {
+      return (
+        <div>
+          <button
+            type="button"
+            className="modalDone"
+            style={{ marginLeft: 30 }}
+            onClick={closeModal}
+          >
+            Done
+          </button>
+        </div>
+      )
+    }
 
-  handleSubmit = event => {
+    return (
+      <div>
+        <button className="modalExport1" onClick={this.props.startCheck}>
+          Activate
+        </button>
+        <button className="modalDone" onClick={this.props.closeModal}>
+          Cancel
+        </button>
+      </div>
+    )
+  }
+
+  handleSubmit = () => {
     this.props.newSession(this.state.value)
   }
 }
