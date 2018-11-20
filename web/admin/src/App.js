@@ -103,7 +103,7 @@ class App extends PureComponent {
           modalAlert={this.state.modalAlert}
         />
         <div className="topBox">
-          <p className="bigBoxTitle">Safety Check</p>
+          <p className="bigBoxTitle">{t("title")}</p>
           {this.showActivate()}
           {this.showCSV()}
         </div>
@@ -111,7 +111,7 @@ class App extends PureComponent {
           active={this.state.check}
           sendPush={this.sendPushMessage}
           sendPost={this.sendPromotedMessage}
-          testMessage="There has been an incident in the area. Please mark yourself as safe."
+          testMessage={t("pushMsg")}
         />
         {this.showActiveCheck()}
       </div>
@@ -131,7 +131,7 @@ class App extends PureComponent {
           },
           UserGroups: [],
           LinkTypeId: 3,
-          LinkText: 'I Am Safe',
+          LinkText: t("amSafe"),
           LinkValue: getExtensionUrl(),
         })
         .then(() => {
@@ -143,10 +143,10 @@ class App extends PureComponent {
           })
         })
         .catch(error => {
-          alert('Please retry sending a Push Notification')
+          alert(t("pushRetry"))
         })
     } else {
-      alert('Please enter text to send a Push Notification')
+      alert(t("pushError"))
     }
   }
 
@@ -174,10 +174,10 @@ class App extends PureComponent {
           })
         })
         .catch(error => {
-          alert('Please retry posting a Promoted Post')
+          alert(t("postRetry"))
         })
     } else {
-      alert('Please enter text to post a Promoted Post')
+      alert(t("postError"))
     }
   }
 
@@ -185,9 +185,9 @@ class App extends PureComponent {
     if (this.isActive()) {
       return (
         <div className="statusesBox">
-          <List listData={this.unknownUsers()} listName="Not Checked In" />
-          <List listData={this.state.safeUsers} listName="Marked As Safe" />
-          <List listData={this.state.ooaUsers} listName="Not in Area" />
+          <List listData={this.unknownUsers()} listName={t("noStatus")} />
+          <List listData={this.state.safeUsers} listName={t("markedSafe")} />
+          <List listData={this.state.ooaUsers} listName={t("OOA")} />
         </div>
       )
     }
@@ -202,19 +202,19 @@ class App extends PureComponent {
 
   showActivate = () => {
     if (this.state.check == null) {
-      return <div>Loading...</div>
+      return <div>{t("loading")}</div>
     }
     if (this.state.check) {
       return (
         <button className="qaButtonOff" onClick={this.endCheck}>
-          Deactivate Safety Check
+          {t("deactivate")}
         </button>
       )
     }
 
     return (
       <button className="qaButton" onClick={this.openModal}>
-        Activate Safety Check
+        {t("activate")}
       </button>
     )
   }
@@ -228,7 +228,7 @@ class App extends PureComponent {
           data={this.state.allUsers}
           filename="attendee-list.csv"
         >
-          Export to CSV
+          {t("export")}
         </CSVLink>
       )
     }

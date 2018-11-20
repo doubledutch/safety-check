@@ -16,6 +16,7 @@
 
 import React, { Component } from 'react'
 import './App.css'
+import { translate as t } from '@doubledutch/admin-client'
 
 export default class CustomMessages extends Component {
   constructor(props) {
@@ -47,7 +48,7 @@ export default class CustomMessages extends Component {
       return (
         <div className="messages">
           <span className="questionBox">
-            <p className="boxTitle">Push Message</p>
+            <p className="boxTitle">{t("pushTitle")}</p>
             <form>
               <textarea
                 className="questionInput"
@@ -59,14 +60,14 @@ export default class CustomMessages extends Component {
               <p className="counterText">{140 - this.state.pushMessage.length}</p>
             </form>
             <div className="buttonBox">
-              <p className="buttonText">(Linked to Safety Check)</p>
+              <p className="buttonText">{t("linked")}</p>
               <button className="publishButton" onClick={this.sendPush}>
-                Publish
+                {t("publish")}
               </button>
             </div>
           </span>
           <span className="questionBox">
-            <p className="boxTitle">Promoted Post</p>
+            <p className="boxTitle">{t("promotedPost")}</p>
             <form>
               <textarea
                 className="questionInput"
@@ -78,10 +79,10 @@ export default class CustomMessages extends Component {
               <p className="counterText">{140 - this.state.promotedMessage.length}</p>
             </form>
             <div className="buttonBox">
-              <p className="buttonText">(Linked to Safety Check)</p>
-              <p className="buttonText">Pinned for 3 hours</p>
+              <p className="buttonText">{t("linked")}</p>
+              <p className="buttonText">{t("pinned")}</p>
               <button className="publishButton" onClick={this.sendPost}>
-                Publish
+                {t("publish")}
               </button>
             </div>
           </span>

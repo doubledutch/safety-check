@@ -17,6 +17,7 @@
 import React, { Component } from 'react'
 import './App.css'
 import Modal from 'react-modal'
+import { translate as t } from '@doubledutch/admin-client'
 import { CSVLink } from 'react-csv'
 
 export class CustomModal extends Component {
@@ -67,11 +68,9 @@ export class CustomModal extends Component {
     if (this.props.endCheck) {
       return (
         <div>
-          <p className="modalHeadline">Safety Check has been deactivated</p>
-          <p className="modalText">
-            We suggest sending a push message alerting your attendees the event area is safe.
-          </p>
-          <p className="modalText">Would you like to export the attendee check-in lists?</p>
+          <p className="modalHeadline">{t('deactivateMsg')}</p>
+          <p className="modalText">{t('suggestText')}</p>
+          <p className="modalText">{t('exportQ')}</p>
         </div>
       )
     }
@@ -79,7 +78,7 @@ export class CustomModal extends Component {
     if (this.props.modalAlert) {
       return (
         <div>
-          <p className="modalHeadline">Success</p>
+          <p className="modalHeadline">{t('success')}</p>
           <p className="modalText" style={{ marginBottom: 75 }}>
             {this.props.modalMessage}
           </p>
@@ -89,12 +88,9 @@ export class CustomModal extends Component {
 
     return (
       <div>
-        <p className="modalHeadline">Confirm to activate Safety Check</p>
-        <p className="modalText">
-          We suggest sending a push message &amp; creating a promoted post alerting your attendees
-          about the incident and to check-in.
-        </p>
-        <p className="modalText">Are you sure you want to active a Safety Check?</p>
+        <p className="modalHeadline">{t('activateConfirm')}</p>
+        <p className="modalText">{t('suggestPushMsg')}</p>
+        <p className="modalText">{t('confirmQ')}</p>
       </div>
     )
   }
@@ -105,10 +101,10 @@ export class CustomModal extends Component {
       return (
         <div>
           <CSVLink className="modalExport" data={allUsers} filename="attendee-list.csv">
-            Export to CSV
+            {t('export')}
           </CSVLink>
           <button type="button" className="modalDone" onClick={closeModal}>
-            Done
+            {t('done')}
           </button>
         </div>
       )
@@ -123,7 +119,7 @@ export class CustomModal extends Component {
             style={{ marginLeft: 30 }}
             onClick={closeModal}
           >
-            Done
+            {t('done')}
           </button>
         </div>
       )
@@ -132,10 +128,10 @@ export class CustomModal extends Component {
     return (
       <div>
         <button className="modalExport1" onClick={this.props.startCheck}>
-          Activate
+          {t('act')}
         </button>
         <button className="modalDone" onClick={this.props.closeModal}>
-          Cancel
+          {t('cancel')}
         </button>
       </div>
     )
