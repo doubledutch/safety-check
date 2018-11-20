@@ -16,6 +16,7 @@
 
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, Image } from 'react-native'
+import { translate as t } from '@doubledutch/rn-client'
 
 export class Status extends Component {
   renderMessage = () => {
@@ -23,14 +24,14 @@ export class Status extends Component {
       if (this.props.status === 'safe') {
         return (
           <View>
-            <Text style={s.message}>You've been marked as safe.</Text>
+            <Text style={s.message}>{t('markedSafe')}</Text>
           </View>
         )
       }
       if (this.props.status === 'OOA') {
         return (
           <View>
-            <Text style={s.message}>You've been marked as not in area.</Text>
+            <Text style={s.message}>{t('markedOOA')}</Text>
           </View>
         )
       }
@@ -39,21 +40,18 @@ export class Status extends Component {
         return (
           <View>
             <Text style={s.message}>
-              There has been an incident
+              {t('incident')}
               {'\n'}
-              affecting the event area
+              {t('area')}
             </Text>
-            <Text style={s.secondMessage}>Are you Safe?</Text>
+            <Text style={s.secondMessage}>{t('safeQ')}</Text>
           </View>
         )
       }
 
       return (
         <View>
-          <Text style={s.message}>
-            In the event of an emergency, please navigate to this page to mark yourself as safe and
-            alert the event organizer.
-          </Text>
+          <Text style={s.message}>{t('emergency')}</Text>
         </View>
       )
     }
@@ -97,7 +95,7 @@ export class Status extends Component {
               margin: 10,
             }}
           >
-            Safety Check
+            {t('title')}
           </Text>
         </View>
         <View style={s.messageBox}>{this.renderMessage()}</View>

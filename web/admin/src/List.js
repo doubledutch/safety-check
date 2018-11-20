@@ -16,6 +16,7 @@
 
 import React, { Component } from 'react'
 import './App.css'
+import { translate as t } from '@doubledutch/admin-client'
 
 class List extends Component {
   constructor(props) {
@@ -28,10 +29,10 @@ class List extends Component {
 
   renderIcons = () => {
     switch (this.props.listName) {
-      case 'Marked As Safe':
+      case t("markedSafe"):
         return <img className="button1" src={require('./icons/checkocircle.png')} alt="Safe" />
 
-      case 'Not in Area':
+      case t("OOA"):
         return <img className="button2" src={require('./icons/check.png')} alt="Not in Area" />
       default:
         return null
