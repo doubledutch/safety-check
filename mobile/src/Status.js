@@ -19,61 +19,67 @@ import { StyleSheet, Text, View, Image } from 'react-native'
 
 export class Status extends Component {
   renderMessage = () => {
-      if (this.props.currentStatus) {
-        if (this.props.status === "safe") {
-            return (
-            <View>
-                <Text style={s.message}>
-                You've been marked as safe.
-                </Text>
-            </View>
-            )
-        }
-        if (this.props.status === "OOA") {
-            return (
-                <View>
-                    <Text style={s.message}>
-                    You've been marked as not in area.
-                    </Text>
-                </View>
-                )
-            }
-      }
-      else {
-        if (this.props.checkStatus){
-            return (
-            <View>
-                <Text style={s.message}>
-                There has been an incident 
-                {"\n"}
-                affecting the event area
-                </Text>
-                <Text style={s.secondMessage}>
-                Are you Safe?
-                </Text>
-            </View>
-            )
-        }
-      
+    if (this.props.currentStatus) {
+      if (this.props.status === 'safe') {
         return (
-        <View>
-            <Text style={s.message}>
-            In the event of an emergency, please navigate to this page to mark yourself as safe and alert the event organizer.
-            </Text>
-        </View>
+          <View>
+            <Text style={s.message}>You've been marked as safe.</Text>
+          </View>
         )
-      
+      }
+      if (this.props.status === 'OOA') {
+        return (
+          <View>
+            <Text style={s.message}>You've been marked as not in area.</Text>
+          </View>
+        )
+      }
+    } else {
+      if (this.props.checkStatus) {
+        return (
+          <View>
+            <Text style={s.message}>
+              There has been an incident
+              {'\n'}
+              affecting the event area
+            </Text>
+            <Text style={s.secondMessage}>Are you Safe?</Text>
+          </View>
+        )
+      }
+
+      return (
+        <View>
+          <Text style={s.message}>
+            In the event of an emergency, please navigate to this page to mark yourself as safe and
+            alert the event organizer.
+          </Text>
+        </View>
+      )
     }
   }
 
   renderIcon = () => {
     if (this.props.currentStatus) {
-        return <Image style={{width: 50, height: 50, margin: 1, flex: 1, alignSelf: "center"}} source={{uri: "https://dml2n2dpleynv.cloudfront.net/extensions/safety-check/checkocircle@2x.png"}}/>
+      return (
+        <Image
+          style={{ width: 50, height: 50, margin: 1, flex: 1, alignSelf: 'center' }}
+          source={{
+            uri: 'https://dml2n2dpleynv.cloudfront.net/extensions/safety-check/checkocircle@2x.png',
+          }}
+        />
+      )
     }
-    
-        return <Image style={{width: 50, height: 50, margin: 1, flex: 1, alignSelf: "center"}} source={{uri: "https://dml2n2dpleynv.cloudfront.net/extensions/safety-check/checkocircle_grey@2x.png"}}/>
-    
-}
+
+    return (
+      <Image
+        style={{ width: 50, height: 50, margin: 1, flex: 1, alignSelf: 'center' }}
+        source={{
+          uri:
+            'https://dml2n2dpleynv.cloudfront.net/extensions/safety-check/checkocircle_grey@2x.png',
+        }}
+      />
+    )
   }
 
   render() {
