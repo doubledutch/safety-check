@@ -16,12 +16,15 @@
 
 import React, { PureComponent } from 'react'
 import './App.css'
-import client from '@doubledutch/admin-client'
+import client, {translate as t, useStrings} from '@doubledutch/admin-client'
 import { provideFirebaseConnectorToReactComponent } from '@doubledutch/firebase-connector'
 import { CSVLink } from 'react-csv'
 import CustomMessages from './CustomMessages'
 import List from './List'
+import i18n from './i18n'
 import CustomModal from './Modal'
+
+useStrings(i18n)
 
 class App extends PureComponent {
   constructor(props) {

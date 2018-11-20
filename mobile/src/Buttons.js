@@ -16,6 +16,7 @@
 
 import React, { Component } from 'react'
 import { TouchableOpacity, Text, View } from 'react-native'
+import { translate as t } from '@doubledutch/rn-client'
 
 export class Buttons extends Component {
   state = {}
@@ -41,7 +42,7 @@ export class Buttons extends Component {
               <Text
                 style={{ color: '#FFFFFF', textAlign: 'center', fontSize: 18, fontWeight: '500' }}
               >
-                I am Safe
+                {t('amSafe')}
               </Text>
             </View>
           </TouchableOpacity>
@@ -61,7 +62,7 @@ export class Buttons extends Component {
               }}
             >
               <Text style={{ textAlign: 'center', fontSize: 18, fontWeight: '500' }}>
-                I am Not in the Area
+                {t('OOA')}
               </Text>
             </View>
           </TouchableOpacity>

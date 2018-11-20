@@ -1,0 +1,11 @@
+{
+  "title": "Safety Check",
+  "amSafe": "I am Safe",
+  "OOA": "I am Not in the Area",
+  "markedSafe": "You've been marked as safe.",
+  "markedOOA": "You've been marked as not in area.",
+  "incident": "There has been an incident",
+  "area": "affecting the event area",
+  "safeQ": "Are you Safe?",
+  "emergency": "In the event of an emergency, please navigate to this page to mark yourself as safe and alert the event organizer."
+}

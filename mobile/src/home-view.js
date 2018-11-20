@@ -16,10 +16,13 @@
 
 import React, { PureComponent } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
-import client, { TitleBar } from '@doubledutch/rn-client'
+import client, { TitleBar, translate as t, useStrings } from '@doubledutch/rn-client'
 import { provideFirebaseConnectorToReactComponent } from '@doubledutch/firebase-connector'
 import { Status } from './Status'
 import { Buttons } from './Buttons'
+import i18n from './i18n'
+
+useStrings(i18n)
 
 Text.defaultProps.allowFontScaling = false
 
@@ -79,7 +82,7 @@ class HomeView extends PureComponent {
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: '#E8E8E8' }}>
-        <TitleBar title="Safety Check" client={client} signin={this.signin} />
+        <TitleBar title={t('title')} client={client} signin={this.signin} />
         <ScrollView style={s.container}>
           <Status
             checkStatus={this.state.checkStatus}
