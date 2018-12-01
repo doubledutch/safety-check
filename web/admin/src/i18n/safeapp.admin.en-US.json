@@ -26,6 +26,6 @@
   "exportQ": "Would you like to export the attendee check-in lists?",
   "success": "Success",
   "activateConfirm": "Confirm to activate Safety Check",
-  "suggestPushMsg": "We suggest sending a push message &amp; creating a promoted post alerting your attendees about the incident and to check-in.",
-  "confirmQ": "Are you sure you want to active a Safety Check?"
+  "suggestPushMsg": "We suggest sending a push message & creating a promoted post alerting your attendees about the incident and to check-in.",
+  "confirmQ": "Are you sure you want to activate a Safety Check?"
 }
