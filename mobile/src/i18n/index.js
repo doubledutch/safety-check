@@ -1,5 +1,5 @@
-import enUS from './safeapp.mobile.en-US.json'
-// import deDE from './safeapp.mobile.de-DE.json'
+import enUS from './en-us/safeapp.mobile.json'
+// import deDE from './de-de/safeapp.mobile.json'
 
 export default (strings = {
   '': enUS,
