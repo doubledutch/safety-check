@@ -24,6 +24,7 @@ import i18n from './i18n'
 
 useStrings(i18n)
 
+if (Text.defaultProps == null) Text.defaultProps = {}
 Text.defaultProps.allowFontScaling = false
 
 class HomeView extends PureComponent {
