@@ -16,7 +16,7 @@
 
 import React, { PureComponent } from 'react'
 import './App.css'
-import client, {translate as t, useStrings} from '@doubledutch/admin-client'
+import client, { translate as t, useStrings } from '@doubledutch/admin-client'
 import { provideFirebaseConnectorToReactComponent } from '@doubledutch/firebase-connector'
 import { CSVLink } from 'react-csv'
 import CustomMessages from './CustomMessages'
@@ -103,7 +103,7 @@ class App extends PureComponent {
           modalAlert={this.state.modalAlert}
         />
         <div className="topBox">
-          <p className="bigBoxTitle">{t("title")}</p>
+          <p className="bigBoxTitle">{t('title')}</p>
           {this.showActivate()}
           {this.showCSV()}
         </div>
@@ -111,7 +111,7 @@ class App extends PureComponent {
           active={this.state.check}
           sendPush={this.sendPushMessage}
           sendPost={this.sendPromotedMessage}
-          testMessage={t("pushMsg")}
+          testMessage={t('pushMsg')}
         />
         {this.showActiveCheck()}
       </div>
@@ -131,7 +131,7 @@ class App extends PureComponent {
           },
           UserGroups: [],
           LinkTypeId: 3,
-          LinkText: t("amSafe"),
+          LinkText: t('amSafe'),
           LinkValue: getExtensionUrl(),
         })
         .then(() => {
@@ -143,10 +143,10 @@ class App extends PureComponent {
           })
         })
         .catch(error => {
-          alert(t("pushRetry"))
+          alert(t('pushRetry'))
         })
     } else {
-      alert(t("pushError"))
+      alert(t('pushError'))
     }
   }
 
@@ -174,10 +174,10 @@ class App extends PureComponent {
           })
         })
         .catch(error => {
-          alert(t("postRetry"))
+          alert(t('postRetry'))
         })
     } else {
-      alert(t("postError"))
+      alert(t('postError'))
     }
   }
 
@@ -185,9 +185,9 @@ class App extends PureComponent {
     if (this.isActive()) {
       return (
         <div className="statusesBox">
-          <List listData={this.unknownUsers()} listName={t("noStatus")} />
-          <List listData={this.state.safeUsers} listName={t("markedSafe")} />
-          <List listData={this.state.ooaUsers} listName={t("OOA")} />
+          <List listData={this.unknownUsers()} listName={t('noStatus')} />
+          <List listData={this.state.safeUsers} listName={t('markedSafe')} />
+          <List listData={this.state.ooaUsers} listName={t('OOA')} />
         </div>
       )
     }
@@ -202,19 +202,19 @@ class App extends PureComponent {
 
   showActivate = () => {
     if (this.state.check == null) {
-      return <div>{t("loading")}</div>
+      return <div>{t('loading')}</div>
     }
     if (this.state.check) {
       return (
         <button className="qaButtonOff" onClick={this.endCheck}>
-          {t("deactivate")}
+          {t('deactivate')}
         </button>
       )
     }
 
     return (
       <button className="qaButton" onClick={this.openModal}>
-        {t("activate")}
+        {t('activate')}
       </button>
     )
   }
@@ -228,7 +228,7 @@ class App extends PureComponent {
           data={this.state.allUsers}
           filename="attendee-list.csv"
         >
-          {t("export")}
+          {t('export')}
         </CSVLink>
       )
     }
@@ -279,12 +279,7 @@ export default provideFirebaseConnectorToReactComponent(
 
 // This hacky URL can be replaced with dd://extensions/safeapp in the fall of 2019 (a year after 8.1, which supports this, was released)
 function getExtensionUrl() {
-  const urlFormat =
-    'https://firebasestorage.googleapis.com/v0/b/bazaar-179323.appspot.com/o/extensions%2FVERSIONED_EXTENSION%2Fmobile%2Findex.__platform__.0.46.4.manifest.bundle?module=safeapp&alt=media#plugin'
-  const matches = window.location.href.match(/\/extensions\/([^/]+\/[^/]+)\//)
-  const versionedExtension = matches[1]
-  if (!versionedExtension) return null
-  return urlFormat.replace('VERSIONED_EXTENSION', versionedExtension.replace('/', '%2F'))
+  return 'dd://extensions/safeapp'
 }
 
 function sortUsers(a, b) {
