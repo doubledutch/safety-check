@@ -80,9 +80,10 @@ class HomeView extends PureComponent {
   }
 
   render() {
+    const { suggestedTitle } = this.props
     return (
       <View style={{ flex: 1, backgroundColor: '#E8E8E8' }}>
-        <TitleBar title={t('title')} client={client} signin={this.signin} />
+        <TitleBar title={suggestedTitle || t('title')} client={client} signin={this.signin} />
         <ScrollView style={s.container}>
           <Status
             checkStatus={this.state.checkStatus}
