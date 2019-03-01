@@ -1,0 +1,11 @@
+{
+  "title" : "Veiligheidscontrole",
+  "amSafe" : "Ik ben veilig",
+  "OOA" : "Ik ben niet in het gebied",
+  "markedSafe" : "U bent gemarkeerd als veilig.",
+  "markedOOA" : "U bent gemarkeerd als niet in het gebied.",
+  "incident" : "Er is een incident geweest",
+  "area" : "dat het gebied van het evenement beïnvloedt",
+  "safeQ" : "Bent u veilig?",
+  "emergency" : "In geval van een incident navigeert u naar deze pagina om uzelf als veilig te markeren en de organisator van het evenement op de hoogte te stellen."
+}

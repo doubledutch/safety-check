@@ -1,0 +1,11 @@
+{
+  "title" : "Comprobación de seguridad",
+  "amSafe" : "Estoy a salvo",
+  "OOA" : "No estoy en la zona",
+  "markedSafe" : "Se te ha marcado indicando que estás a salvo.",
+  "markedOOA" : "Se te ha marcado indicando que no estás en la zona.",
+  "incident" : "Ha habido un incidente",
+  "area" : "que afecta a la zona del evento",
+  "safeQ" : "¿Estás a salvo?",
+  "emergency" : "En caso de emergencia, accede a esta página para indicar que estás a salvo y avisar al organizador del evento."
+}

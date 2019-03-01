@@ -1,0 +1,11 @@
+{
+  "title" : "Controllo di sicurezza",
+  "amSafe" : "Sto bene",
+  "OOA" : "Non sono nella zona",
+  "markedSafe" : "È stato indicato che stai bene.",
+  "markedOOA" : "È stato indicato che non sei nella zona.",
+  "incident" : "C'è stato un incidente",
+  "area" : "nella zona dell'evento",
+  "safeQ" : "Stai bene?",
+  "emergency" : "In caso di emergenza, naviga in questa pagina per indicare che stai bene e avvisare l'organizzatore dell'evento."
+}

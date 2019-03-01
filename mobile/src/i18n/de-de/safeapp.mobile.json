@@ -1,0 +1,11 @@
+{
+  "title" : "Sicherheitsüberprüfung",
+  "amSafe" : "Ich bin sicher",
+  "OOA" : "Ich bin nicht im Bereich",
+  "markedSafe" : "Sie wurden als sicher gekennzeichnet.",
+  "markedOOA" : "Sie wurden als nicht im Bereich gekennzeichnet.",
+  "incident" : "Es hat eine Störung gegeben",
+  "area" : "die den Veranstaltungsbereich beeinflusst",
+  "safeQ" : "Sind Sie sicher?",
+  "emergency" : "Navigieren Sie im Falle eines unerwarteten Ereignisses zu dieser Seite, um sich als sicher zu kennzeichnen und den Veranstalter zu benachrichtigen."
+}

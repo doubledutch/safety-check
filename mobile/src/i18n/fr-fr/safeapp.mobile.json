@@ -1,0 +1,11 @@
+{
+  "title" : "Contrôle de sécurité",
+  "amSafe" : "Je suis en sécurité",
+  "OOA" : "Je ne suis pas sur les lieux",
+  "markedSafe" : "Vous avez été marqué comme étant en sécurité.",
+  "markedOOA" : "Vous avez été marqué comme n'étant pas sur les lieux.",
+  "incident" : "Un incident s'est produit",
+  "area" : "affectant le lieu de l'événement",
+  "safeQ" : "Êtes-vous en sécurité ?",
+  "emergency" : "En cas d'urgence, veuillez accéder à cette page pour indiquer que vous êtes en sécurité et prévenir l'organisateur de l'événement."
+}
