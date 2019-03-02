@@ -1,12 +1,12 @@
-import enUS from './en-us/safeapp.admin.json'
+import enUS from './en-us/safeapp.mobile.json'
 
-import arINT from './ar-int/safeapp.admin.json'
-import deDE from './de-de/safeapp.admin.json'
-import esES from './es-es/safeapp.admin.json'
-import frFR from './fr-fr/safeapp.admin.json'
-import itIT from './it-it/safeapp.admin.json'
-import jaJP from './ja-jp/safeapp.admin.json'
-import nlNL from './nl-nl/safeapp.admin.json'
+import arINT from './ar-int/safeapp.mobile.json'
+import deDE from './de-de/safeapp.mobile.json'
+import esES from './es-es/safeapp.mobile.json'
+import frFR from './fr-fr/safeapp.mobile.json'
+import itIT from './it-it/safeapp.mobile.json'
+import jaJP from './ja-jp/safeapp.mobile.json'
+import nlNL from './nl-nl/safeapp.mobile.json'
 
 export default {
   '': enUS,
