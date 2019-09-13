@@ -44,8 +44,8 @@
   color: white;
   font-size: 13px;
   height: 34px;
-  width: 150px;
   margin-top: 10px;
+  padding: 8px;
 }
 
 .qaButtonOff{
@@ -56,7 +56,18 @@
   color: white;
   font-size: 13px;
   height: 34px;
+  padding: 8px;
   margin-top: 10px;
+}
+
+.tableContainer {
+  flex: 1;
+  box-sizing: border-box;
+  margin: 20px 0px;
+  padding: 20px;
+  border-radius: 5px;
+  border: 1px solid #E3ECF8;
+  background-color: #FFFFFF;
 }
 
 .csvButton{
@@ -67,7 +78,6 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Fira Sans', 'Open Sans', 'Helvetica Neue', sans-serif;
   color: #4A4A4A;
   font-size: 13px;
-  margin-top: 10px;
   padding: 8px;
 }
 
@@ -76,15 +86,28 @@
   margin-right: 20px;
 }
 
+.searchBar {
+  margin: 0px;
+  padding: 5px;
+  border-radius: 5px;
+  height: 28px;
+  width: 300px;
+  border: 0.06em solid #abbac9;
+}
+
+.containerTitle {
+  font-size: 18px;
+}
+
 .messages{
   display: flex;
-  margin-left: 21px;
-  margin-top: 48px;
+  margin-top: 20px;
 }
 
 .boxTitle{
   font-size: 16px;
   height: 22px;
+  margin: 0px 0px 10px 0px;
   font-family: -apple-system, BlinkMacSystemFont, 'Fira Sans', 'Open Sans', 'Helvetica Neue', sans-serif;
   color: #4A4A4A;
   font-weight: 600;
@@ -97,6 +120,8 @@
   padding-Left: 10px;
   height: 113px;
   font-size: 15px;
+  border-radius: 5px;
+  border: 1px solid #DEDEDE;
   color: #364347;
   font-family: -apple-system, BlinkMacSystemFont, 'Fira Sans', 'Open Sans', 'Helvetica Neue', sans-serif;
 }
@@ -150,7 +175,7 @@
 
 .listBox{
   width: 33%;
-  padding: 10px;
+  padding: 0px 10px;
 }
 
 .list{
@@ -161,6 +186,7 @@
   list-style: none;
   padding: 0px;
   overflow: auto;
+  border-radius: 5px;
 }
 
 .listItem{
@@ -254,10 +280,12 @@
 }
 
 
-.modalText{
+.modalTextSec{
   font-family: -apple-system, BlinkMacSystemFont, 'Fira Sans', 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: 14px;
   color: #4A4A4A;
+  margin-bottom: 20px;
+  font-weight: 500;
 }
 
 .modalDone{
@@ -269,7 +297,7 @@
   height: 41px;
   width: 81px;
   margin-top: 15px;
-  border-radius: 0;
+  border-radius: 4px;
 }
 
 .modalExport{
@@ -286,6 +314,7 @@
   padding-bottom: 10px;
   padding-right: 20px;
   padding-left: 20px;
+  border-radius: 4px;
 }
 
 .modalExport1{
@@ -300,4 +329,5 @@
   margin-top: 15px;
   margin-left: 30px;
   margin-right: 20px;
+  border-radius: 4px;
 }
