@@ -29,10 +29,10 @@ class List extends Component {
 
   renderIcons = () => {
     switch (this.props.listName) {
-      case t("markedSafe"):
+      case t('markedSafe'):
         return <img className="button1" src={require('./icons/checkocircle.png')} alt="Safe" />
 
-      case t("OOA"):
+      case t('OOA'):
         return <img className="button2" src={require('./icons/check.png')} alt="Not in Area" />
       default:
         return null
@@ -40,18 +40,25 @@ class List extends Component {
   }
 
   listData = () => {
-    if (this.props.listData) {
-      const users = this.props.listData
-      const listItems = users.map(user => (
-        <li className="listItem" key={user.id}>
-          <span className="listItemBox">
-            <p className="itemTitle">{`${user.firstName} ${user.lastName}`}</p>
-            {this.renderIcons()}
-          </span>
-        </li>
-      ))
-      return <ul className="list">{listItems}</ul>
+    if (this.props.listData.length) {
+      return (
+        <ul className="list">
+          {this.props.listData.map(user => (
+            <li className="listItem" key={user.id}>
+              <span className="listItemBox">
+                <p className="itemTitle">{`${user.firstName} ${user.lastName}`}</p>
+                {this.renderIcons()}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )
     }
+    return (
+      <ul className="list">
+        <p className="listHelpText">No Users Listed</p>
+      </ul>
+    )
   }
 
   render() {

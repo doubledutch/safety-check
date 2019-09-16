@@ -36,6 +36,13 @@
   margin-left: 21px;
 }
 
+.listHelpText {
+  flex: 1;
+  display: flex;
+  align-self: center;
+  margin-top: 310px;
+}
+
 .qaButton{
   background-color: #009DCD;
   border: none;
