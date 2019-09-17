@@ -31,6 +31,7 @@ export class CustomModal extends Component {
         isOpen={openVar}
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
+        shouldCloseOnOverlayClick={false}
         contentLabel="Modal"
         className="Modal"
         overlayClassName="Overlay"
