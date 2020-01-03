@@ -46,46 +46,49 @@ export default class CustomMessages extends Component {
   showButtons = () => {
     if (this.props.active) {
       return (
-        <div className="messages">
-          <span className="questionBox">
-            <p className="boxTitle">{t("pushTitle")}</p>
-            <form>
-              <textarea
-                className="questionInput"
-                type="message"
-                maxLength="140"
-                value={this.state.pushMessage}
-                onChange={this.pushMessageChanged}
-              />
-              <p className="counterText">{140 - this.state.pushMessage.length}</p>
-            </form>
-            <div className="buttonBox">
-              <p className="buttonText">{t("linked")}</p>
-              <button className="publishButton" onClick={this.sendPush}>
-                {t("publish")}
-              </button>
-            </div>
-          </span>
-          <span className="questionBox">
-            <p className="boxTitle">{t("promotedPost")}</p>
-            <form>
-              <textarea
-                className="questionInput"
-                type="post"
-                maxLength="140"
-                value={this.state.promotedMessage}
-                onChange={this.promotedMessageChanged}
-              />
-              <p className="counterText">{140 - this.state.promotedMessage.length}</p>
-            </form>
-            <div className="buttonBox">
-              <p className="buttonText">{t("linked")}</p>
-              <p className="buttonText">{t("pinned")}</p>
-              <button className="publishButton" onClick={this.sendPost}>
-                {t("publish")}
-              </button>
-            </div>
-          </span>
+        <div className="tableContainer">
+          <p className="containerTitle">Active Check Messages</p>
+          <div className="messages">
+            <span className="questionBox">
+              <p className="boxTitle">{t('pushTitle')}</p>
+              <form>
+                <textarea
+                  className="questionInput"
+                  type="message"
+                  maxLength="140"
+                  value={this.state.pushMessage}
+                  onChange={this.pushMessageChanged}
+                />
+                <p className="counterText">{140 - this.state.pushMessage.length}</p>
+              </form>
+              <div className="buttonBox">
+                <p className="buttonText">{t('linked')}</p>
+                <button className="publishButton" onClick={this.sendPush}>
+                  {t('publish')}
+                </button>
+              </div>
+            </span>
+            <span className="questionBox">
+              <p className="boxTitle">{t('promotedPost')}</p>
+              <form>
+                <textarea
+                  className="questionInput"
+                  type="post"
+                  maxLength="140"
+                  value={this.state.promotedMessage}
+                  onChange={this.promotedMessageChanged}
+                />
+                <p className="counterText">{140 - this.state.promotedMessage.length}</p>
+              </form>
+              <div className="buttonBox">
+                <p className="buttonText">{t('linked')}</p>
+                <p className="buttonText">{t('pinned')}</p>
+                <button className="publishButton" onClick={this.sendPost}>
+                  {t('publish')}
+                </button>
+              </div>
+            </span>
+          </div>
         </div>
       )
     }

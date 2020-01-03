@@ -21,8 +21,10 @@ import { provideFirebaseConnectorToReactComponent } from '@doubledutch/firebase-
 import { CSVLink } from 'react-csv'
 import CustomMessages from './CustomMessages'
 import List from './List'
+import SearchBar from './SearchBar'
 import i18n from './i18n'
 import CustomModal from './Modal'
+import '@doubledutch/react-components/lib/base.css'
 
 useStrings(i18n)
 
@@ -40,6 +42,7 @@ class App extends PureComponent {
       modalAlert: false,
       endCheck: false,
       modalMessage: '',
+      search: '',
     }
     this.signin = props.fbc
       .signinAdmin()
@@ -184,18 +187,41 @@ class App extends PureComponent {
   showActiveCheck = () => {
     if (this.isActive()) {
       return (
-        <div className="statusesBox">
-          <List listData={this.unknownUsers()} listName={t('noStatus')} />
-          <List listData={this.state.safeUsers} listName={t('markedSafe')} />
-          <List listData={this.state.ooaUsers} listName={t('OOA')} />
+        <div className="tableContainer">
+          <p className="containerTitle">User Status</p>
+          <SearchBar search={this.state.search} updateSearch={this.updateSearch} />
+          <div className="statusesBox">
+            <List listData={this.unknownUsers()} listName={t('noStatus')} />
+            <List
+              listData={this.filteredAttendees(this.state.safeUsers)}
+              listName={t('markedSafe')}
+            />
+            <List listData={this.filteredAttendees(this.state.ooaUsers)} listName={t('OOA')} />
+          </div>
         </div>
       )
     }
   }
 
+  updateSearch = search => {
+    this.setState({ search })
+  }
+
+  filteredAttendees = list => {
+    if (this.state.search.trim()) {
+      return list.filter(user => {
+        const name = `${user.firstName.toLowerCase()} ${user.lastName.toLowerCase()}`
+        return name.includes(this.state.search.trim().toLowerCase())
+      })
+    }
+    return list
+  }
+
   unknownUsers = () =>
-    this.state.allUsers.filter(
-      u => !this.state.safeUsers.includes(u) && !this.state.ooaUsers.includes(u),
+    this.filteredAttendees(
+      this.state.allUsers.filter(
+        u => !this.state.safeUsers.includes(u) && !this.state.ooaUsers.includes(u),
+      ),
     )
 
   isActive = () => !!(this.state.check || this.state.safeUsers.length || this.state.ooaUsers.length)

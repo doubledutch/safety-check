@@ -31,6 +31,7 @@ export class CustomModal extends Component {
         isOpen={openVar}
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
+        shouldCloseOnOverlayClick={false}
         contentLabel="Modal"
         className="Modal"
         overlayClassName="Overlay"
@@ -70,7 +71,7 @@ export class CustomModal extends Component {
         <div>
           <p className="modalHeadline">{t('deactivateMsg')}</p>
           <p className="modalText">{t('suggestText')}</p>
-          <p className="modalText">{t('exportQ')}</p>
+          <p className="modalTextSec">{t('exportQ')}</p>
         </div>
       )
     }
@@ -90,7 +91,7 @@ export class CustomModal extends Component {
       <div>
         <p className="modalHeadline">{t('activateConfirm')}</p>
         <p className="modalText">{t('suggestPushMsg')}</p>
-        <p className="modalText">{t('confirmQ')}</p>
+        <p className="modalTextSec">{t('confirmQ')}</p>
       </div>
     )
   }
